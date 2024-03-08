@@ -26,7 +26,7 @@ export const ShowResult = ({
               Did you mean
               <a onClick={() => getImages(correctedQuery)}>
                 {correctedQuery}
-              </a>{" "}
+              </a>
               ?
             </p>
           ) : (

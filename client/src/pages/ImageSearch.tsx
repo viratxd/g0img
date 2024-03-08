@@ -14,7 +14,6 @@ export const ImageSearch = () => {
   const getData = async (searchWord: string) => {
     try {
       setIsLoading(true);
-      
       const data = await getImages(searchWord);
       console.log(data);
 

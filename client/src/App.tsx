@@ -1,14 +1,23 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
-import LoginButton from "./components/LoginButton";
-import LogoutButton from "./components/LogoutButton";
+import { LoginPage } from "./pages/LoginPage";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./Router";
 
 function App() {
   const { isAuthenticated } = useAuth0();
+
   return (
     <>
-      Image Search
-      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+      {isAuthenticated ? (
+        <>
+          <RouterProvider router={router} />
+        </>
+      ) : (
+        <>
+          <LoginPage />
+        </>
+      )}
     </>
   );
 }

@@ -1,41 +1,59 @@
 import axios from "axios";
 import LogoutButton from "../components/LogoutButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IImage } from "../models/IImage";
+import { SearchForm } from "../components/SearchForm";
 
 export const ImageSearch = () => {
   const [images, setImages] = useState<IImage[]>();
   const [searchTime, setSearchTime] = useState("");
+  const [correctedQuery, setCorrectedQuery] = useState("");
 
-  useEffect(() => {
-    const getData = async () => {
+  const getData = async (searchWord: string) => {
+    try {
       const response = await axios.get(
         `https://www.googleapis.com/customsearch/v1?key=${
           import.meta.env.VITE_GOOGLE_API_KEY
         }&cx=${
           import.meta.env.VITE_GOOGLE_SEARCH_ENGINE_ID
-        }&q=panda&num=10&searchType=image`
+        }&q=${searchWord}&num=10&searchType=image`
       );
       const data = await response.data;
+      console.log(data);
+
+      if (data.spelling) {
+        setCorrectedQuery(data.spelling.correctedQuery);
+        return;
+      }
+
       setImages(data.items);
       setSearchTime(data.searchInformation.formattedSearchTime);
-      console.log(data);
-    };
-    getData();
-  }, []);
-  console.log(searchTime);
+      console.log(searchTime);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
       <h1>Image Search Page</h1>
-      <div>
+      <SearchForm search={getData} />
+      <section>
         <p>{searchTime}sec</p>
+        {correctedQuery ? (
+          <p>
+            Did you mean <a onClick={() => getData(correctedQuery)}>{correctedQuery}</a>{" "}
+            ?
+          </p>
+        ) : (
+          <></>
+        )}
         {images?.map((image) => (
           <figure>
             <img src={image.link} alt={image.title} />
           </figure>
         ))}
-      </div>
+      </section>
       <LogoutButton />
     </>
   );

@@ -49,7 +49,6 @@ export const ImageSearch = () => {
         search={getData}
         searchWord={searchWord}
       />
-      <LogoutButton />
     </div>
   );
 };

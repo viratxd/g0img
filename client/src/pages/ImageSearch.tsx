@@ -38,7 +38,7 @@ export const ImageSearch = () => {
   };
 
   return (
-    <>
+    <div className="image-search">
       <h1>Image Search Page</h1>
       <SearchForm search={getData} />
       <ShowResult
@@ -50,6 +50,6 @@ export const ImageSearch = () => {
         searchWord={searchWord}
       />
       <LogoutButton />
-    </>
+    </div>
   );
 };

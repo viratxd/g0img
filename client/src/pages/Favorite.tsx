@@ -1,10 +1,19 @@
-import LogoutButton from "../components/LogoutButton"
+import { useContext } from "react";
+import { LikedImagesContext } from "../contexts/LikedImagesContext";
 
 export const Favorite = () => {
-    return (
-        <>
-            Favorite Images
-            <LogoutButton />
-        </>
-    )
-}
+  const { likedImages } = useContext(LikedImagesContext);
+
+  return (
+    <div className="result-images">
+      {likedImages?.map((image) => (
+        <figure className="image">
+          <button>
+            <span className="material-symbols-outlined">favorite</span>
+          </button>
+          <img src={image.image.link} alt={image.image.title} />
+        </figure>
+      ))}
+    </div>
+  );
+};

@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { IImage } from "../models/IImage";
+import { LikedImagesContext } from "../contexts/LikedImagesContext";
 
 interface IShowResultProps {
   searchWord: string;
@@ -17,6 +19,8 @@ export const ShowResult = ({
   isLoading,
   search,
 }: IShowResultProps) => {
+  const { add } = useContext(LikedImagesContext);
+
   return (
     <>
       {isLoading ? (
@@ -24,15 +28,33 @@ export const ShowResult = ({
       ) : (
         <section className="result">
           <div className="result-info">
-            {correctedQuery ? <p className="corrected-query">Did you mean <a onClick={() => search(correctedQuery)}>{correctedQuery}</a> ?</p> : <></>}
-            {searchWord && !correctedQuery ? <h3>Result for: <em>{searchWord}</em></h3> : <></>}
+            {correctedQuery ? (
+              <p className="corrected-query">
+                Did you mean{" "}
+                <a onClick={() => search(correctedQuery)}>{correctedQuery}</a> ?
+              </p>
+            ) : (
+              <></>
+            )}
+            {searchWord && !correctedQuery ? (
+              <h3>
+                Result for: <em>{searchWord}</em>
+              </h3>
+            ) : (
+              <></>
+            )}
             {searchTime ? <p>Search time: {searchTime}sec</p> : <></>}
           </div>
           <div className="result-images">
             {images?.map((image) => (
-              <figure>
-                <img src={image.link} alt={image.title} />
-              </figure>
+              <a onClick={() => add(image)}>
+                <figure className="image">
+                  <button>
+                    <span className="material-symbols-outlined">favorite</span>
+                  </button>
+                  <img src={image.link} alt={image.title} />
+                </figure>
+              </a>
             ))}
           </div>
         </section>

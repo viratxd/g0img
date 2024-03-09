@@ -19,6 +19,8 @@ export const ImageSearch = () => {
     try {
       setIsLoading(true);
       const data = await getImages(searchWord);
+      console.log(data);
+      
 
       if (data.spelling) {
         setCorrectedQuery(data.spelling.correctedQuery);

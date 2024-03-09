@@ -10,10 +10,10 @@ a {
   font-weight: 500;
   color: var(--dark-color);
   text-decoration: none;
-}
 
-a:hover {
-  color: var(--accent-color);
+  &:hover {
+    color: var(--light-color);
+  }
 }
 
 body {

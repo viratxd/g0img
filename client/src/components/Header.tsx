@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export const Header = () => {
   return (
     <header>
-      <button>Image Search App</button>
+      <NavLink to={"/"} className="header-logo">Image Search App</NavLink>
       <nav>
         <ul>
           <NavLink to={"/"}>Home</NavLink>

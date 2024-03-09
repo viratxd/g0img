@@ -2,15 +2,23 @@ import { createBrowserRouter } from "react-router-dom";
 import { Favorite } from "./pages/Favorite";
 import { ImageSearch } from "./pages/ImageSearch";
 import { NotFound } from "./pages/NotFound";
+import { Layout } from "./pages/Layout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <ImageSearch />,
-    errorElement: <NotFound />
-  },
-  {
-    path: "/favorite",
-    element: <Favorite />,
-  },
+    element: <Layout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "/",
+        element: <ImageSearch />,
+        index: true
+      },
+      {
+        path: "/favorite",
+        element: <Favorite />,
+      },
+    ]
+  }
 ]);

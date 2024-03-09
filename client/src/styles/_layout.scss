@@ -1,0 +1,58 @@
+:root {
+  --font-sans: "Josefin Sans", sans-serif;
+
+  --light-color: #e1ded9;
+  --dark-color: #353434;
+  --accent-color: #90a0a8;
+}
+
+a {
+  font-weight: 500;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  background-color: #fcfcfc;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  font-family: var(--font-sans);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+  }
+
+  &:focus,
+  &:focus-visible {
+  }
+}
+
+figure {
+  margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}

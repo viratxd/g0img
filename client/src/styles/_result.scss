@@ -1,0 +1,49 @@
+.result {
+  padding: 2rem;
+
+  &-info {
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .corrected-query {
+      font-size: 1.3rem;
+
+      a {
+        font-weight: 700;
+      }
+    }
+  }
+
+  &-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+
+    &::before {
+      content: "";
+      max-width: 280px;
+      width: 100%;
+      order: 1;
+    }
+
+    &::after {
+      content: "";
+      max-width: 280px;
+      width: 100%;
+    }
+
+    figure {
+      aspect-ratio: 1 / 1;
+      max-width: 280px;
+      width: 100%;
+    }
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import LogoutButton from "../components/LogoutButton";
 import { useState } from "react";
 import { IImage } from "../models/IImage";
 import { SearchForm } from "../components/SearchForm";
@@ -14,6 +13,7 @@ export const ImageSearch = () => {
 
   const getData = async (searchWord: string) => {
     setImages([]);
+    setSearchTime("");
     setSearchWord(searchWord);
 
     try {
@@ -28,10 +28,8 @@ export const ImageSearch = () => {
       setCorrectedQuery("");
       setImages(data.items);
       setSearchTime(data.searchInformation.formattedSearchTime);
-
     } catch (error) {
       console.log(error);
-      
     } finally {
       setIsLoading(false);
     }

@@ -17,9 +17,11 @@ export const SearchForm = ({ search }: ISearchFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="search-form" onSubmit={handleSubmit}>
       <input type="text" value={searchWord} onChange={handleChange} />
-      <button>Search</button>
+      <button>
+        <span className="material-symbols-outlined">search</span>
+      </button>
     </form>
   );
 };

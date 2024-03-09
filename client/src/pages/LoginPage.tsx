@@ -1,9 +1,10 @@
-import LoginButton from "../components/LoginButton"
+import LoginButton from "../components/LoginButton";
 
 export const LoginPage = () => {
-    return (
-        <>
-            <LoginButton />
-        </>
-    )
-}
+  return (
+    <div className="login">
+      <h1>Image Search App</h1>
+      <LoginButton />
+    </div>
+  );
+};

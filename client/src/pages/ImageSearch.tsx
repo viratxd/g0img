@@ -10,21 +10,24 @@ export const ImageSearch = () => {
   const [searchTime, setSearchTime] = useState("");
   const [correctedQuery, setCorrectedQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [searchWord, setSearchWord] = useState("");
 
   const getData = async (searchWord: string) => {
+    setImages([]);
+    setSearchWord(searchWord);
+
     try {
       setIsLoading(true);
       const data = await getImages(searchWord);
-      console.log(data);
 
       if (data.spelling) {
         setCorrectedQuery(data.spelling.correctedQuery);
         return;
       }
 
+      setCorrectedQuery("");
       setImages(data.items);
       setSearchTime(data.searchInformation.formattedSearchTime);
-      console.log(searchTime);
 
     } catch (error) {
       console.log(error);
@@ -43,6 +46,8 @@ export const ImageSearch = () => {
         correctedQuery={correctedQuery}
         images={images}
         isLoading={isLoading}
+        search={getData}
+        searchWord={searchWord}
       />
       <LogoutButton />
     </>

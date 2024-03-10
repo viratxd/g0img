@@ -11,7 +11,7 @@ function App() {
   const { isAuthenticated } = useAuth0();
   const [likedImages, setLikedImages] = useState<ILikedImagesContext>({
     likedImages: [],
-    add: (newLikedImage: IImage) => {}
+    add: () => {}
   });
 
   likedImages.add = (newLikedImage: IImage) => {

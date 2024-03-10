@@ -9,5 +9,5 @@ export interface ILikedImagesContext {
 
 export const LikedImagesContext = createContext<ILikedImagesContext>({
     likedImages: [],
-    add: (newLikedImage: IImage) => {}
+    add: () => {}
 });

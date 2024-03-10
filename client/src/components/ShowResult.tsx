@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { IImage } from "../models/IImage";
-import { LikedImagesContext } from "../contexts/LikedImagesContext";
+import { LikeImageContext } from "../contexts/LikeImageContext";
 
 interface IShowResultProps {
   searchWord: string;
@@ -19,8 +19,8 @@ export const ShowResult = ({
   isLoading,
   search,
 }: IShowResultProps) => {
-  const { add } = useContext(LikedImagesContext);
-
+  const { add } = useContext(LikeImageContext);
+  
   return (
     <>
       {isLoading ? (
@@ -47,12 +47,13 @@ export const ShowResult = ({
           </div>
           <div className="result-images">
             {images?.map((image) => (
-              <a onClick={() => add(image)}>
-                <figure className="image">
+              <figure className="image">
+                <a onClick={(e) => add(image, e)}>
+                  {/* <span className="material-symbols-outlined">heart_check</span> */}
                   <span className="material-symbols-outlined">favorite</span>
-                  <img src={image.link} alt={image.title} />
-                </figure>
-              </a>
+                </a>
+                <img src={image.link} alt={image.title} />
+              </figure>
             ))}
           </div>
         </section>

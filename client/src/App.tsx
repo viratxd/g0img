@@ -4,26 +4,43 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { useState } from "react";
 import { LikedImage } from "./models/LikedImage";
-import { ILikedImagesContext, LikedImagesContext } from "./contexts/LikedImagesContext";
+import { ILikeImageContext, LikeImageContext } from "./contexts/LikeImageContext";
 import { IImage } from "./models/IImage";
 
 function App() {
   const { isAuthenticated } = useAuth0();
-  const [likedImages, setLikedImages] = useState<ILikedImagesContext>({
-    likedImages: [],
-    add: () => {}
+  const [likeImage, setLikeImage] = useState<ILikeImageContext>({
+    likedImages: JSON.parse(localStorage.getItem("Liked images") || "[]"),
+    add: () => {},
   });
 
-  likedImages.add = (newLikedImage: IImage) => {
-    setLikedImages({...likedImages, likedImages: [...likedImages.likedImages, new LikedImage(newLikedImage)]})
-  }
+  likeImage.add = (
+    newLikedImage: IImage,
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    // const span = e.target as HTMLAnchorElement;
+    // span.innerText = "heart_check";
+    
+    const existingImages = likeImage.likedImages.find(
+      img => img.image.title === newLikedImage.title
+    );
+
+    if (!existingImages) {
+      setLikeImage({
+        ...likeImage,
+        likedImages: [...likeImage.likedImages, new LikedImage(newLikedImage)],
+      });
+    } else {
+      window.alert("This image is already existing in your favorite list.");
+    }
+  };
 
   return (
     <>
       {isAuthenticated ? (
-        <LikedImagesContext.Provider value={likedImages}>
+        <LikeImageContext.Provider value={likeImage}>
           <RouterProvider router={router} />
-        </LikedImagesContext.Provider>
+        </LikeImageContext.Provider>
       ) : (
         <>
           <LoginPage />

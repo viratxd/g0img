@@ -2,12 +2,12 @@ import { createContext } from "react";
 import { LikedImage } from "../models/LikedImage";
 import { IImage } from "../models/IImage";
 
-export interface ILikedImagesContext {
+export interface ILikeImageContext {
     likedImages: LikedImage[];
-    add: (newLikedImage: IImage) => void;
+    add: (newLikedImage: IImage, e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-export const LikedImagesContext = createContext<ILikedImagesContext>({
+export const LikeImageContext = createContext<ILikeImageContext>({
     likedImages: [],
     add: () => {}
 });

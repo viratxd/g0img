@@ -18,22 +18,13 @@ function App() {
     remove: () => {},
   });
 
-  likeImage.add = (
-    newLikedImage: IImage
-    // e: React.MouseEvent<HTMLAnchorElement>
-  ) => {
-    // const span = e.target as HTMLAnchorElement;
-    // span.innerText = "heart_check";
-
+  likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
-      (img) => img.image.title === newLikedImage.title
+      image => image.image.title === newLikedImage.title
     );
 
     if (!existingImages) {
-      setLikeImage({
-        ...likeImage,
-        likedImages: [...likeImage.likedImages, new LikedImage(newLikedImage)],
-      });
+      setLikeImage({...likeImage, likedImages: [...likeImage.likedImages, new LikedImage(newLikedImage)]});
     } else {
       window.alert("This image is already existing in your favorite list.");
     }
@@ -41,12 +32,11 @@ function App() {
 
   likeImage.remove = (removedImage: LikedImage) => {
     const newImages = likeImage.likedImages.filter(
-      (image) => image.image.title !== removedImage.image.title
+      image => image.image.title !== removedImage.image.title
     );
 
-    const confirm = window.confirm(
-      "Are you sure you want to remove this image from your list?"
-    );
+    const confirm = window.confirm("Are you sure you want to remove this image from your list?");
+    
     if (confirm) {
       setLikeImage({ ...likeImage, likedImages: newImages });
     }

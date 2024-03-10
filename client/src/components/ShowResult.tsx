@@ -49,9 +49,7 @@ export const ShowResult = ({
             {images?.map((image) => (
               <a onClick={() => add(image)}>
                 <figure className="image">
-                  <button>
-                    <span className="material-symbols-outlined">favorite</span>
-                  </button>
+                  <span className="material-symbols-outlined">favorite</span>
                   <img src={image.link} alt={image.title} />
                 </figure>
               </a>

@@ -39,20 +39,20 @@
       aspect-ratio: 1 / 1;
       max-width: 280px;
       width: 100%;
+      transition: all 0.4s;
       position: relative;
-      transition: all 0.3s;
 
       &:hover {
         opacity: 0.6;
 
-        button {
+        span {
           opacity: 1;
           visibility: visible;
-          background-color: transparent;
         }
       }
 
-      button {
+      span {
+        font-size: 4rem;
         border: none;
         padding: 0;
         position: absolute;
@@ -62,10 +62,7 @@
         color: var(--light-color);
         opacity: 0;
         visibility: hidden;
-
-        span {
-          font-size: 4rem;
-        }
+        transition: all 0.4s;
       }
 
       img {

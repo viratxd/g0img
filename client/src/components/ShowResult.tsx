@@ -54,7 +54,7 @@ export const ShowResult = ({
                   ).length > 0 ? (
                     <span
                       className="material-symbols-outlined"
-                      style={{ color: "#ca5f71" }}
+                      style={{ color: "#de4c64" }}
                     >
                       heart_check
                     </span>

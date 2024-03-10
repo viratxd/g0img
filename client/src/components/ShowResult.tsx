@@ -19,8 +19,8 @@ export const ShowResult = ({
   isLoading,
   search,
 }: IShowResultProps) => {
-  const { add } = useContext(LikeImageContext);
-  
+  const { add, likedImages } = useContext(LikeImageContext);
+
   return (
     <>
       {isLoading ? (
@@ -48,9 +48,19 @@ export const ShowResult = ({
           <div className="result-images">
             {images?.map((image) => (
               <figure className="image">
-                <a onClick={(e) => add(image, e)}>
-                  {/* <span className="material-symbols-outlined">heart_check</span> */}
-                  <span className="material-symbols-outlined">favorite</span>
+                <a onClick={(/* e */) => add(image /* , e */)}>
+                  {likedImages.filter(
+                    (likedImage) => image.title === likedImage.image.title
+                  ).length > 0 ? (
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ color: "#ca5f71" }}
+                    >
+                      heart_check
+                    </span>
+                  ) : (
+                    <span className="material-symbols-outlined">favorite</span>
+                  )}
                 </a>
                 <img src={image.link} alt={image.title} />
               </figure>

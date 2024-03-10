@@ -4,7 +4,10 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { useState } from "react";
 import { LikedImage } from "./models/LikedImage";
-import { ILikeImageContext, LikeImageContext } from "./contexts/LikeImageContext";
+import {
+  ILikeImageContext,
+  LikeImageContext,
+} from "./contexts/LikeImageContext";
 import { IImage } from "./models/IImage";
 
 function App() {
@@ -15,14 +18,14 @@ function App() {
   });
 
   likeImage.add = (
-    newLikedImage: IImage,
-    e: React.MouseEvent<HTMLAnchorElement>
+    newLikedImage: IImage
+    // e: React.MouseEvent<HTMLAnchorElement>
   ) => {
     // const span = e.target as HTMLAnchorElement;
     // span.innerText = "heart_check";
-    
+
     const existingImages = likeImage.likedImages.find(
-      img => img.image.title === newLikedImage.title
+      (img) => img.image.title === newLikedImage.title
     );
 
     if (!existingImages) {

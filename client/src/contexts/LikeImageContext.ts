@@ -5,9 +5,11 @@ import { IImage } from "../models/IImage";
 export interface ILikeImageContext {
     likedImages: LikedImage[];
     add: (newLikedImage: IImage/* , e: React.MouseEvent<HTMLAnchorElement> */) => void;
+    remove: (removedImage: LikedImage) => void
 }
 
 export const LikeImageContext = createContext<ILikeImageContext>({
     likedImages: [],
-    add: () => {}
+    add: () => {},
+    remove: () => {}
 });

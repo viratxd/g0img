@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { LikeImageContext } from "../contexts/LikeImageContext";
 
 export const Favorite = () => {
-  const { likedImages } = useContext(LikeImageContext);
+  const { likedImages, remove } = useContext(LikeImageContext);
   localStorage.setItem("Liked images", JSON.stringify(likedImages));
 
   return (
@@ -10,6 +10,9 @@ export const Favorite = () => {
       <div className="favorite-images">
         {likedImages?.map((image) => (
           <figure className="image">
+            <a onClick={() => remove(image)}>
+              <span className="material-symbols-outlined">heart_minus</span>
+            </a>
             <img src={image.image.link} alt={image.image.title} />
           </figure>
         ))}

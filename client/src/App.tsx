@@ -15,6 +15,7 @@ function App() {
   const [likeImage, setLikeImage] = useState<ILikeImageContext>({
     likedImages: JSON.parse(localStorage.getItem("Liked images") || "[]"),
     add: () => {},
+    remove: () => {},
   });
 
   likeImage.add = (
@@ -35,6 +36,19 @@ function App() {
       });
     } else {
       window.alert("This image is already existing in your favorite list.");
+    }
+  };
+
+  likeImage.remove = (removedImage: LikedImage) => {
+    const newImages = likeImage.likedImages.filter(
+      (image) => image.image.title !== removedImage.image.title
+    );
+
+    const confirm = window.confirm(
+      "Are you sure you want to remove this image from your list?"
+    );
+    if (confirm) {
+      setLikeImage({ ...likeImage, likedImages: newImages });
     }
   };
 

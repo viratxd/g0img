@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { LikedImagesContext } from "../contexts/LikedImagesContext";
+import { LikeImageContext } from "../contexts/LikeImageContext";
 
 export const Favorite = () => {
-  const { likedImages } = useContext(LikedImagesContext);
+  const { likedImages } = useContext(LikeImageContext);
+  localStorage.setItem("Liked images", JSON.stringify(likedImages));
 
   return (
     <div className="favorite">

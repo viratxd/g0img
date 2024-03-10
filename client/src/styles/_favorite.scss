@@ -26,6 +26,21 @@
       width: 100%;
       position: relative;
 
+      &:hover {
+        span {
+          color: #da2d2d;
+        }
+      }
+
+      span {
+        position: absolute;
+        color: var(--light-color);
+        font-size: 2rem;
+        top: 1rem;
+        right: 1rem;
+        transition: all 0.3s;
+      }
+
       img {
         height: 100%;
         object-fit: cover;

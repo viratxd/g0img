@@ -4,7 +4,7 @@ import { IImage } from "../models/IImage";
 
 export interface ILikeImageContext {
     likedImages: LikedImage[];
-    add: (newLikedImage: IImage/* , e: React.MouseEvent<HTMLAnchorElement> */) => void;
+    add: (newLikedImage: IImage) => void;
     remove: (removedImage: LikedImage) => void
 }
 

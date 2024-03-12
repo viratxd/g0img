@@ -47,10 +47,10 @@ export const ShowResult = ({
           </div>
           <div className="result-images">
             {images?.map((image) => (
-              <figure className="image">
-                <a onClick={(/* e */) => add(image /* , e */)}>
+              <figure key={image.link} className="image">
+                <a onClick={() => add(image)}>
                   {likedImages.filter(
-                    (likedImage) => image.title === likedImage.image.title
+                    (likedImage) => image.title === likedImage.title
                   ).length > 0 ? (
                     <span
                       className="material-symbols-outlined"

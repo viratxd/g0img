@@ -1,17 +1,21 @@
 const express = require("express");
+const cors = require("cors");
+const fs = require("fs");
 
 const app = express();
 
-app.use(express.json())
+const images = [];
 
-const users = [];
+app.use(cors());
+app.use(express.json());
 
-app.post("/search", (req, res) => {
-    favorite.push(req.body)
-})
+app.get("/api/favorite", (req, res) => {
+  res.status(200).json(images)
+});
 
-app.get("/favorite", (req, res) => {
-    res.send("User can check favorite images here.")
-})
+app.put("/api/favorite", (req, res) => {
+  images.push(req.body);
+  res.status(201).json(req.body);
+});
 
 app.listen(3000, () => console.log("Server is up and running..."));

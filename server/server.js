@@ -15,10 +15,9 @@ app.get("/api/favorite", (req, res) => {
 });
 
 app.post("/api/favorite", (req, res) => {
-  const { error } = favoriteSchema.validate(req.body, {abortEarly: false});
+  const { error } = favoriteSchema.validate(req.body, { abortEarly: false });
 
   if (error) {
-    console.log(error);
     return res.status(400).json(error);
   }
 

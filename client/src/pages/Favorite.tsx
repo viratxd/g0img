@@ -5,14 +5,13 @@ import { IImage } from "../models/IImage";
 
 export const Favorite = () => {
   const { likedImages, remove } = useContext(LikeImageContext);
-  const [ images, setImages ] = useState<IImage[]>([])
-  // localStorage.setItem("Liked images", JSON.stringify(likedImages));
+  const [images, setImages] = useState<IImage[]>([]);
 
   useEffect(() => {
     const getLikedImages = async () => {
       const response = await axios.get("http://localhost:3000/api/favorite");
       const images = response.data;
-      setImages(images)
+      setImages(images);
     };
     getLikedImages();
   }, [likedImages]);

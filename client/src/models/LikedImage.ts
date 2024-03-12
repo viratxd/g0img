@@ -1,7 +1,3 @@
-import { IImage } from "./IImage";
-
 export class LikedImage {
-    constructor (
-        public image: IImage
-    ) {}
+  constructor(public link: string, public title: string) {}
 }

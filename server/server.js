@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+const { favoriteSchema } = require("./schemas/favorite.schema");
 
 const app = express();
 
@@ -14,12 +15,19 @@ app.get("/api/favorite", (req, res) => {
 });
 
 app.post("/api/favorite", (req, res) => {
+  const { error } = favoriteSchema.validate(req.body, {abortEarly: false});
+
+  if (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+
   images.push(req.body);
   res.status(201).json(req.body);
 });
 
 app.put("/api/favorite", (req, res) => {
-  const removedImage = req.body
+  const removedImage = req.body;
   images = images.filter((image) => image.link !== removedImage.link);
   res.status(200).json(images);
 });

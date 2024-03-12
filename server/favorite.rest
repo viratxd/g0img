@@ -1,3 +1,12 @@
 GET http://localhost:3000/api/favorite
 ###
 POST http://localhost:3000/api/favorite
+Content-Type: application/json
+
+{
+    "title": "sample",
+    "link": "https://www.sample.com/sample.jpg"
+}
+
+###
+PUT http://localhost:3000/api/favorite

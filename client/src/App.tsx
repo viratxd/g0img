@@ -29,11 +29,10 @@ function App() {
 
   likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
-      (image) => image.title === newLikedImage.title
+      (image) => image.link === newLikedImage.link
     );
 
     if (!existingImages) {
-      
       setLikeImage({
         ...likeImage,
         likedImages: [
@@ -42,11 +41,10 @@ function App() {
         ],
       });
 
-      const saveLikedImages = async () => {
-        await axios.put("http://localhost:3000/api/favorite", newLikedImage);
+      const saveLikedImage = async () => {
+        await axios.post("http://localhost:3000/api/favorite", newLikedImage);
       };
-      saveLikedImages();
-
+      saveLikedImage();
     } else {
       window.alert("This image is already existing in your favorite list.");
     }
@@ -63,6 +61,11 @@ function App() {
 
     if (confirm) {
       setLikeImage({ ...likeImage, likedImages: newImages });
+
+      const saveLikedImages = async () => {
+        await axios.put("http://localhost:3000/api/favorite", removedImage);
+      };
+      saveLikedImages();
     }
   };
 

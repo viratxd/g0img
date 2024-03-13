@@ -33,18 +33,12 @@ function App() {
     });
   }, [isAuthenticated]);
 
-  console.log(auth.userName);
-  
-
   useEffect(() => {
     const saveUser = async () => {
-      await axios.post(
-        `http://localhost:3000/api/users`,
-        auth
-      );
+      await axios.post(`http://localhost:3000/api/users`, auth);
     };
     saveUser();
-  }, [auth])
+  }, [auth]);
 
   useEffect(() => {
     const getLikedImages = async () => {

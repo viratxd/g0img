@@ -1,5 +1,15 @@
 GET http://localhost:3000/api/favorite
 ###
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "isAuthenticated": true,
+    "userId": "github|118256347",
+    "userName": "Aoi Tanaka"
+}
+
+###
 POST http://localhost:3000/api/favorite
 Content-Type: application/json
 

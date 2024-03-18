@@ -38,7 +38,7 @@ function App() {
       await axios.post("http://localhost:3000/api/users", auth);
     };
     saveUser();
-  }, [auth]);
+  }, [auth.isAuthenticated]);
 
   useEffect(() => {
     const getLikedImages = async () => {
@@ -57,18 +57,20 @@ function App() {
     );
 
     if (!existingImages) {
+      const updatedLikedImages = [
+        ...likeImage.likedImages,
+        new LikedImage(newLikedImage.link, newLikedImage.title),
+      ];
+
       setLikeImage({
         ...likeImage,
-        likedImages: [
-          ...likeImage.likedImages,
-          new LikedImage(newLikedImage.link, newLikedImage.title),
-        ],
+        likedImages: updatedLikedImages,
       });
 
       const saveLikedImage = async () => {
         await axios.put("http://localhost:3000/api/users", {
           userName: auth.userName,
-          imageData: likeImage.likedImages,
+          imageData: updatedLikedImages,
         });
       };
       saveLikedImage();
@@ -78,7 +80,7 @@ function App() {
   };
 
   likeImage.remove = (removedImage: LikedImage) => {
-    const newImages = likeImage.likedImages.filter(
+    const updatedLikedImages = likeImage.likedImages.filter(
       (image) => image.title !== removedImage.title
     );
 
@@ -87,12 +89,12 @@ function App() {
     );
 
     if (confirm) {
-      setLikeImage({ ...likeImage, likedImages: newImages });
+      setLikeImage({ ...likeImage, likedImages: updatedLikedImages });
 
       const removeLikedImage = async () => {
         await axios.put("http://localhost:3000/api/users", {
           userName: auth.userName,
-          imageData: newImages,
+          imageData: updatedLikedImages,
         });
       };
       removeLikedImage();

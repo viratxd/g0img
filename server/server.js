@@ -35,7 +35,6 @@ app.post("/api/users", (req, res) => {
 app.put("/api/users", (req, res) => {
   const user = users.find((user) => user.user == req.body.userName);
   if (user) {
-    console.log(req.body.imageData);
     user.favoriteImages = req.body.imageData;
   } else {
     console.log("User not found");

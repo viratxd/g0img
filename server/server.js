@@ -1,10 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs").promises;
+const { validate } = require("./validate");
 const { favoriteImageSchema } = require("./schemas/favoriteImage.schema");
 const { userSchema } = require("./schemas/user.schema");
 
 const app = express();
+
+app.use(cors());
+app.use(express.json());
 
 let users = [];
 
@@ -23,21 +27,13 @@ const getDataFromFile = async () => {
 };
 getDataFromFile();
 
-app.use(cors());
-app.use(express.json());
-
 app.get("/api/users", (req, res) => {
   res.status(200).json(users);
   console.log("Users data loaded successfully");
 });
 
-app.post("/api/users", (req, res) => {
-  const { error } = userSchema.validate(req.body, { abortEarly: false });
-  if (error) {
-    return res.status(400).json(error);
-  }
+app.post("/api/users", validate(userSchema), (req, res) => {
   const existingUser = users.find((user) => user.user === req.body.userName);
-
   if (!existingUser) {
     const newUser = { user: req.body.userName, favoriteImages: [] };
     users.push(newUser);
@@ -54,15 +50,7 @@ app.post("/api/users", (req, res) => {
   }
 });
 
-app.put("/api/users", (req, res) => {
-  console.log(req.body);
-  const { error } = favoriteImageSchema.validate(req.body, {
-    abortEarly: false,
-  });
-  if (error) {
-    return res.status(400).json(error);
-  }
-  
+app.put("/api/users", validate(favoriteImageSchema), (req, res) => {
   const user = users.find((user) => user.user == req.body.userName);
   if (user) {
     user.favoriteImages = req.body.imageData;

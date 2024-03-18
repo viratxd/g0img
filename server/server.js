@@ -2,12 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const { favoriteSchema } = require("./schemas/favorite.schema");
-const { usersSchema } = require("./schemas/users.schema");
+const { userSchema } = require("./schemas/user.schema");
 
 const app = express();
 
 const users = [];
-let images = [];
 
 app.use(cors());
 app.use(express.json());
@@ -17,16 +16,15 @@ app.get("/api/users", (req, res) => {
 });
 
 app.post("/api/users", (req, res) => {
-  const { error } = usersSchema.validate(req.body, { abortEarly: false });
+  const { error } = userSchema.validate(req.body, { abortEarly: false });
   if (error) {
     return res.status(400).json(error);
   }
-  const existingUser = users.find(
-    (user) => user.userName === req.body.userName
-  );
-  console.log(users);
+  const existingUser = users.find((user) => user.user === req.body.userName);
+
   if (!existingUser) {
-    users.push(req.body);
+    const newUser = { user: req.body.userName, favoriteImages: [] };
+    users.push(newUser);
     res.status(201).json(req.body);
     console.log("User successfully added");
   } else {
@@ -34,23 +32,16 @@ app.post("/api/users", (req, res) => {
   }
 });
 
-app.get("/api/favorite/:userId", (req, res) => {
-  res.status(200).json(images);
-});
-
-app.post("/api/favorite/:userId", (req, res) => {
-  const { error } = favoriteSchema.validate(req.body, { abortEarly: false });
-  if (error) {
-    return res.status(400).json(error);
+app.put("/api/users", (req, res) => {
+  const user = users.find((user) => user.user == req.body.userName);
+  if (user) {
+    console.log(req.body.imageData);
+    user.favoriteImages = req.body.imageData;
+  } else {
+    console.log("User not found");
   }
-  images.push(req.body);
-  res.status(201).json(req.body);
-});
 
-app.put("/api/favorite/:userId", (req, res) => {
-  const removedImage = req.body;
-  images = images.filter((image) => image.link !== removedImage.link);
-  res.status(200).json(images);
+  res.status(200).json(req.body.imageData);
 });
 
 app.listen(3000, () => console.log("Server is up and running..."));

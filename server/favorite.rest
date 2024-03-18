@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/favorite
+GET http://localhost:3000/api/users
 ###
 POST http://localhost:3000/api/users
 Content-Type: application/json
@@ -10,13 +10,17 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/favorite
+PUT http://localhost:3000/api/users
 Content-Type: application/json
 
-{
-    "title": "sample",
-    "link": "https://www.sample.com/sample.jpg"
-}
+[
+  {
+    "link": "https://www.healthyeating.org/images/default-source/home-0.0/nutrition-topics-2.0/general-nutrition-wellness/2-2-2-3foodgroups_fruits_detailfeature.jpg?sfvrsn=64942d53_4",      
+    "title": "Fruits"
+  },
+  {
+    "link": "https://cdn-prod.medicalnewstoday.com/content/images/articles/325/325253/assortment-of-fruits.jpg",
+    "title":" Is there a best time to eat fruit? Facts and myths"
+  }
+]
 
-###
-PUT http://localhost:3000/api/favorite

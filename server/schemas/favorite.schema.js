@@ -1,5 +1,12 @@
 const Joi = require("joi");
 
+// const favoriteSchema = Joi.array([
+//   Joi.object({
+//     title: Joi.string().required(),
+//     link: Joi.string(),
+//   }),
+// ]);
+
 const favoriteSchema = Joi.object({
   kind: Joi.string().valid("customsearch#result").required(),
   title: Joi.string().required(),

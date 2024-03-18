@@ -9,8 +9,8 @@ export const Favorite = () => {
 
   useEffect(() => {
     const getLikedImages = async () => {
-      const response = await axios.get("http://localhost:3000/api/favorite");
-      const images = response.data;
+      const response = await axios.get("http://localhost:3000/api/users");
+      const images = response.data[0].favoriteImages;
       setImages(images);
     };
     getLikedImages();

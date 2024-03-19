@@ -2,15 +2,19 @@ import { useContext, useEffect, useState } from "react";
 import { LikeImageContext } from "../contexts/LikeImageContext";
 import axios from "axios";
 import { IImage } from "../models/IImage";
+import { AuthContext } from "../contexts/AuthContext";
 
 export const Favorite = () => {
   const { likedImages, remove } = useContext(LikeImageContext);
+  const { userId } = useContext(AuthContext);
   const [images, setImages] = useState<IImage[]>([]);
 
   useEffect(() => {
     const getLikedImages = async () => {
-      const response = await axios.get("http://localhost:3000/api/users");
-      const images = response.data[0].favoriteImages;
+      const response = await axios.get(
+        `http://localhost:3000/api/user/${userId}`
+      );
+      const images = response.data.favoriteImages;
       setImages(images);
     };
     getLikedImages();

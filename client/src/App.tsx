@@ -35,21 +35,23 @@ function App() {
 
   useEffect(() => {
     const saveUser = async () => {
-      await axios.post("http://localhost:3000/api/users", auth);
+      await axios.post(`http://localhost:3000/api/user/${auth.userId}`, auth);
     };
     saveUser();
-  }, [auth.isAuthenticated]);
+  }, [auth]);
 
   useEffect(() => {
     const getLikedImages = async () => {
-      const response = await axios.get("http://localhost:3000/api/users");
+      const response = await axios.get(
+        `http://localhost:3000/api/user/${auth.userId}`
+      );
       setLikeImage({
         ...likeImage,
         likedImages: response.data[0].favoriteImages,
       });
     };
     getLikedImages();
-  }, []);
+  }, [likeImage.likedImages]);
 
   likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
@@ -68,10 +70,14 @@ function App() {
       });
 
       const saveLikedImage = async () => {
-        await axios.put("http://localhost:3000/api/users", {
-          userName: auth.userName,
-          imageData: updatedLikedImages,
-        });
+        if (auth.userId) {
+          await axios.put(
+            `http://localhost:3000/api/user/${auth.userId}`,
+            updatedLikedImages
+          );
+        } else {
+          console.log("User ID not found");
+        }
       };
       saveLikedImage();
     } else {
@@ -92,10 +98,10 @@ function App() {
       setLikeImage({ ...likeImage, likedImages: updatedLikedImages });
 
       const removeLikedImage = async () => {
-        await axios.put("http://localhost:3000/api/users", {
-          userName: auth.userName,
-          imageData: updatedLikedImages,
-        });
+        await axios.put(
+          `http://localhost:3000/api/user/${auth.userId}`,
+          updatedLikedImages
+        );
       };
       removeLikedImage();
     }

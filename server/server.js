@@ -12,10 +12,6 @@ app.use(express.json());
 
 let users = [];
 
-const writeFile = async () => {
-  await fs.writeFile("users.json", JSON.stringify(users, null, 1));
-};
-
 const getDataFromFile = async () => {
   try {
     const fileData = await fs.readFile("users.json");
@@ -32,15 +28,28 @@ app.get("/api/users", (req, res) => {
   console.log("Users data loaded successfully");
 });
 
-app.post("/api/users", validate(userSchema), (req, res) => {
-  const existingUser = users.find((user) => user.user === req.body.userName);
+app.get("/api/user/:userId", (req, res) => {
+  const user = users.find((user) => user.userId == req.params.userId);
+  res.status(200).json(user);
+  console.log("User data loaded successfully");
+});
+
+app.post("/api/user/:userId", validate(userSchema), (req, res) => {
+  const existingUser = users.find((user) => user.userId === req.params.userId);
   if (!existingUser) {
-    const newUser = { user: req.body.userName, favoriteImages: [] };
+    const newUser = {
+      user: req.body.userName,
+      userId: req.body.userId,
+      favoriteImages: [],
+    };
     users.push(newUser);
     try {
+      const writeFile = async () => {
+        await fs.writeFile("users.json", JSON.stringify(users, null, 1));
+      };
       writeFile();
       res.status(201).json(req.body);
-      console.log("User successfully added");
+      console.log("User added successfully");
     } catch (error) {
       console.error("Error writing to file:", error);
       res.status(500).json({ error: "Error writing to file" });
@@ -50,13 +59,16 @@ app.post("/api/users", validate(userSchema), (req, res) => {
   }
 });
 
-app.put("/api/users", validate(favoriteImageSchema), (req, res) => {
-  const user = users.find((user) => user.user == req.body.userName);
+app.put("/api/user/:userId", validate(favoriteImageSchema), (req, res) => {
+  const user = users.find((user) => user.userId == req.params.userId);
   if (user) {
-    user.favoriteImages = req.body.imageData;
+    user.favoriteImages = req.body;
     try {
+      const writeFile = async () => {
+        await fs.writeFile("users.json", JSON.stringify(users, null, 1));
+      };
       writeFile();
-      res.status(200).json(req.body.imageData);
+      res.status(200).json(req.body);
     } catch (error) {
       console.error("Error writing to file:", error);
       res.status(500).json({ error: "Error writing to file" });

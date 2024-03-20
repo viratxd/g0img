@@ -10,14 +10,22 @@ export const Favorite = () => {
   const [images, setImages] = useState<IImage[]>([]);
 
   useEffect(() => {
-    const getLikedImages = async () => {
-      const response = await axios.get(
-        `http://localhost:3000/api/user/${userId}`
-      );
-      const images = response.data.favoriteImages;
-      setImages(images);
+    const getFavoriteImages = async () => {
+      if (userId) {
+        try {
+          const response = await axios.get(
+            `http://localhost:3000/api/user/${userId}`
+          );
+          const imagesFromApi = response.data.favoriteImages;
+          setImages(imagesFromApi);
+        } catch (error) {
+          console.error("axios get error", error);
+        }
+      } else {
+        console.log("User ID not found");
+      }
     };
-    getLikedImages();
+    getFavoriteImages();
   }, [likedImages]);
 
   return (

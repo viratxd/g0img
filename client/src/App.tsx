@@ -34,24 +34,27 @@ function App() {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    const saveUser = async () => {
-      await axios.post(`http://localhost:3000/api/user/${auth.userId}`, auth);
-    };
-    saveUser();
-  }, [auth]);
-
-  useEffect(() => {
-    const getLikedImages = async () => {
-      const response = await axios.get(
-        `http://localhost:3000/api/user/${auth.userId}`
-      );
-      setLikeImage({
-        ...likeImage,
-        likedImages: response.data[0].favoriteImages,
-      });
-    };
-    getLikedImages();
-  }, [likeImage.likedImages]);
+    if (auth.userId) {
+      const createNewUser = async () => {
+        await axios.post(`http://localhost:3000/api/user/${auth.userId}`, auth);
+      };
+      createNewUser();
+      
+      const getSavedFavoriteImages = async () => {
+        const response = await axios.get(
+          `http://localhost:3000/api/user/${auth.userId}`
+        );
+        const savedFavoriteImages = response.data.favoriteImages;
+        if (savedFavoriteImages) {
+          setLikeImage({
+            ...likeImage,
+            likedImages: savedFavoriteImages,
+          });
+        }
+      };
+      getSavedFavoriteImages();
+    }
+  }, [auth.userId]);
 
   likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
@@ -76,7 +79,7 @@ function App() {
             updatedLikedImages
           );
         } else {
-          console.log("User ID not found");
+          console.log(`User ID not found`);
         }
       };
       saveLikedImage();
@@ -96,12 +99,15 @@ function App() {
 
     if (confirm) {
       setLikeImage({ ...likeImage, likedImages: updatedLikedImages });
-
       const removeLikedImage = async () => {
-        await axios.put(
-          `http://localhost:3000/api/user/${auth.userId}`,
-          updatedLikedImages
-        );
+        if (auth.userId) {
+          await axios.put(
+            `http://localhost:3000/api/user/${auth.userId}`,
+            updatedLikedImages
+          );
+        } else {
+          console.log("User ID not found");
+        }
       };
       removeLikedImage();
     }

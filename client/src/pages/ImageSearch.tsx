@@ -1,60 +1,62 @@
 import { useState } from "react";
-import { IImage } from "../models/IImage";
 import { SearchForm } from "../components/SearchForm";
 import { ShowResult } from "../components/ShowResult";
 import { getImagesFromGoogleSearch } from "../services/imageService";
+import { SearchData } from "../models/SearchData";
 
 export const ImageSearch = () => {
-  const [images, setImages] = useState<IImage[]>(
-    JSON.parse(localStorage.getItem("Images") || "[]")
+  const [searchData, setSearchData] = useState<SearchData>(
+    new SearchData(
+      JSON.parse(localStorage.getItem("Images") || "[]"),
+      localStorage.getItem("Search time") || "",
+      localStorage.getItem("Corrected query") || "",
+      false,
+      localStorage.getItem("Search word") || ""
+    )
   );
-  const [searchTime, setSearchTime] = useState(
-    localStorage.getItem("Search time") || ""
-  );
-  const [correctedQuery, setCorrectedQuery] = useState(
-    localStorage.getItem("Corrected query") || ""
-  );
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchWord, setSearchWord] = useState(
-    localStorage.getItem("Search word") || ""
-  );
-
+  
   const getData = async (searchWord: string) => {
     localStorage.setItem("Search word", searchWord);
-    setSearchWord(searchWord);
-
+    setSearchData(prevSearchData => ({ ...prevSearchData, searchWord: searchWord }));
+    
     try {
-      setIsLoading(true);
+      setSearchData(prevSearchData => ({ ...prevSearchData, isLoading: true }));
       const data = await getImagesFromGoogleSearch(searchWord);
-
+      
       if (data.spelling) {
-        localStorage.setItem("Images", "[]");
-        setImages([]);
-        localStorage.setItem("Search time", "");
-        setSearchTime("");
-
         const correctedQuery = data.spelling.correctedQuery;
+
+        setSearchData(prevSearchData => ({
+          ...prevSearchData,
+          images: [],
+          searchTime: "",
+          correctedQuery: correctedQuery,
+        }));
+
+        localStorage.setItem("Images", "[]");
+        localStorage.setItem("Search time", "");
         localStorage.setItem("Corrected query", correctedQuery);
-        setCorrectedQuery(correctedQuery);
+
         return;
       }
 
-      localStorage.setItem("Corrected query", "");
-      setCorrectedQuery("");
-
       const images = data.items;
-      localStorage.setItem("Images", JSON.stringify(images));
-      setImages(images);
-
       const searchTime = data.searchInformation.formattedSearchTime;
-      localStorage.setItem("Search time", searchTime);
-      setSearchTime(searchTime);
 
+      setSearchData(prevSearchData => ({
+        ...prevSearchData,
+        correctedQuery: "",
+        images: images,
+        searchTime: searchTime,
+      }));
+
+      localStorage.setItem("Images", JSON.stringify(images));
+      localStorage.setItem("Corrected query", "");
+      localStorage.setItem("Search time", searchTime);
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setSearchData(prevSearchData => ({ ...prevSearchData, isLoading: false }));
     }
   };
 
@@ -63,12 +65,12 @@ export const ImageSearch = () => {
       <h1>Image Search Page</h1>
       <SearchForm search={getData} />
       <ShowResult
-        searchTime={searchTime}
-        correctedQuery={correctedQuery}
-        images={images}
-        isLoading={isLoading}
+        searchTime={searchData.searchTime}
+        correctedQuery={searchData.correctedQuery}
+        images={searchData.images}
+        isLoading={searchData.isLoading}
+        searchWord={searchData.searchWord}
         search={getData}
-        searchWord={searchWord}
       />
     </div>
   );

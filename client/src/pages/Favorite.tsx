@@ -6,17 +6,15 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export const Favorite = () => {
   const { likedImages, remove } = useContext(LikeImageContext);
-  const { userIdWithGoogle, userIdWithGithub } = useContext(AuthContext);
+  const { userName } = useContext(AuthContext);
   const [images, setImages] = useState<IImage[]>([]);
 
   useEffect(() => {
     const getFavoriteImages = async () => {
-      const userId = userIdWithGoogle || userIdWithGithub;
-
-      if (userId) {
+      if (userName) {
         try {
           const response = await axios.get(
-            `http://localhost:3000/api/user/${userId}`
+            `http://localhost:3000/api/user/${userName}`
           );
           const imagesFromApi = response.data.favoriteImages;
           setImages(imagesFromApi);

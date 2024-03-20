@@ -36,18 +36,18 @@ function App() {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    const userId = auth.userIdWithGoogle || auth.userIdWithGithub;
-    console.log(userId);
-    
-    if (userId) {
+    if (auth.userName) {
       const createNewUser = async () => {
-        await axios.post(`http://localhost:3000/api/user/${userId}`, auth);
+        await axios.post(
+          `http://localhost:3000/api/user/${auth.userName}`,
+          auth
+        );
       };
       createNewUser();
 
       const getSavedFavoriteImages = async () => {
         const response = await axios.get(
-          `http://localhost:3000/api/user/${userId}`
+          `http://localhost:3000/api/user/${auth.userName}`
         );
         const savedFavoriteImages = response.data.favoriteImages;
         if (savedFavoriteImages) {
@@ -78,15 +78,13 @@ function App() {
       });
 
       const saveLikedImage = async () => {
-        const userId = auth.userIdWithGoogle || auth.userIdWithGithub;
-
-        if (userId) {
+        if (auth.userName) {
           await axios.put(
-            `http://localhost:3000/api/user/${userId}`,
+            `http://localhost:3000/api/user/${auth.userName}`,
             updatedLikedImages
           );
         } else {
-          console.log(`User ID not found`);
+          console.log(`User ${auth.userName} not found`);
         }
       };
       saveLikedImage();
@@ -107,15 +105,13 @@ function App() {
     if (confirm) {
       setLikeImage({ ...likeImage, likedImages: updatedLikedImages });
       const removeLikedImage = async () => {
-        const userId = auth.userIdWithGoogle || auth.userIdWithGithub;
-
-        if (userId) {
+        if (auth.userName) {
           await axios.put(
-            `http://localhost:3000/api/user/${userId}`,
+            `http://localhost:3000/api/user/${auth.userName}`,
             updatedLikedImages
           );
         } else {
-          console.log("User ID not found");
+          console.log(`User ${auth.userName} not found`);
         }
       };
       removeLikedImage();

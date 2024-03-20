@@ -28,8 +28,8 @@ app.get("/api/users", (req, res) => {
   console.log("All users data loaded into the server successfully");
 });
 
-app.get("/api/user/:userId", (req, res) => {
-  const user = users.find((user) => user.userId == req.params.userId);
+app.get("/api/user/:userName", (req, res) => {
+  const user = users.find((user) => user.user == req.params.userName);
   if (user) {
     res.status(200).json(user);
     console.log(`User ${user.user}'s data loaded into the server successfully`);
@@ -38,8 +38,8 @@ app.get("/api/user/:userId", (req, res) => {
   }
 });
 
-app.post("/api/user/:userId", validate(userSchema), (req, res) => {
-  let existingUser = users.find((user) => user.user === req.body.userName);
+app.post("/api/user/:userName", validate(userSchema), (req, res) => {
+  let existingUser = users.find((user) => user.user === req.params.userName);
 
   if (!existingUser) {
     const newUser = {
@@ -102,8 +102,8 @@ app.post("/api/user/:userId", validate(userSchema), (req, res) => {
   }
 });
 
-app.put("/api/user/:userId", validate(favoriteImageSchema), (req, res) => {
-  const user = users.find((user) => user.userId == req.params.userId);
+app.put("/api/user/:userName", validate(favoriteImageSchema), (req, res) => {
+  const user = users.find((user) => user.user == req.params.userName);
   if (user) {
     user.favoriteImages = req.body;
     try {
@@ -117,7 +117,7 @@ app.put("/api/user/:userId", validate(favoriteImageSchema), (req, res) => {
       res.status(500).json({ error: "Error writing to file" });
     }
   } else {
-    console.log(`User ${user.user} not found`);
+    console.log(`User not found`);
   }
 });
 

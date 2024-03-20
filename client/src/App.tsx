@@ -21,28 +21,33 @@ function App() {
   });
   const [auth, setAuth] = useState<IAuthContext>({
     isAuthenticated: true,
-    userId: "",
+    userIdWithGoogle: "",
+    userIdWithGithub: "",
     userName: "",
   });
 
   useEffect(() => {
     setAuth({
       isAuthenticated: isAuthenticated,
-      userId: user?.sub ?? "",
+      userIdWithGoogle: user?.sub?.includes("google") ? user.sub : "",
+      userIdWithGithub: user?.sub?.includes("github") ? user.sub : "",
       userName: user?.name ?? "",
     });
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (auth.userId) {
+    const userId = auth.userIdWithGoogle || auth.userIdWithGithub;
+    console.log(userId);
+    
+    if (userId) {
       const createNewUser = async () => {
-        await axios.post(`http://localhost:3000/api/user/${auth.userId}`, auth);
+        await axios.post(`http://localhost:3000/api/user/${userId}`, auth);
       };
       createNewUser();
-      
+
       const getSavedFavoriteImages = async () => {
         const response = await axios.get(
-          `http://localhost:3000/api/user/${auth.userId}`
+          `http://localhost:3000/api/user/${userId}`
         );
         const savedFavoriteImages = response.data.favoriteImages;
         if (savedFavoriteImages) {
@@ -54,7 +59,7 @@ function App() {
       };
       getSavedFavoriteImages();
     }
-  }, [auth.userId]);
+  }, [auth]);
 
   likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
@@ -73,9 +78,11 @@ function App() {
       });
 
       const saveLikedImage = async () => {
-        if (auth.userId) {
+        const userId = auth.userIdWithGoogle || auth.userIdWithGithub;
+
+        if (userId) {
           await axios.put(
-            `http://localhost:3000/api/user/${auth.userId}`,
+            `http://localhost:3000/api/user/${userId}`,
             updatedLikedImages
           );
         } else {
@@ -100,9 +107,11 @@ function App() {
     if (confirm) {
       setLikeImage({ ...likeImage, likedImages: updatedLikedImages });
       const removeLikedImage = async () => {
-        if (auth.userId) {
+        const userId = auth.userIdWithGoogle || auth.userIdWithGithub;
+
+        if (userId) {
           await axios.put(
-            `http://localhost:3000/api/user/${auth.userId}`,
+            `http://localhost:3000/api/user/${userId}`,
             updatedLikedImages
           );
         } else {

@@ -16,7 +16,7 @@ const getDataFromFile = async () => {
   try {
     const fileData = await fs.readFile("users.json");
     users = JSON.parse(fileData);
-    console.log("Users data loaded into the array successfully");
+    console.log("All users data loaded into the array successfully");
   } catch (error) {
     console.error("Error reading file:", error);
   }
@@ -30,23 +30,26 @@ app.get("/api/users", (req, res) => {
 
 app.get("/api/user/:userId", (req, res) => {
   const user = users.find((user) => user.userId == req.params.userId);
-  if(user) {
+  if (user) {
     res.status(200).json(user);
     console.log(`User ${user.user}'s data loaded into the server successfully`);
   } else {
-    console.log(`User with ID ${req.params.userId} not found`)
+    console.log(`User with ID ${req.params.userId} not found`);
   }
 });
 
 app.post("/api/user/:userId", validate(userSchema), (req, res) => {
-  const existingUser = users.find((user) => user.userId === req.params.userId);
+  let existingUser = users.find((user) => user.user === req.body.userName);
+
   if (!existingUser) {
     const newUser = {
       user: req.body.userName,
-      userId: req.body.userId,
+      userIdWithGoogle: req.body.userIdWithGoogle,
+      userIdWithGithub: req.body.userIdWithGithub,
       favoriteImages: [],
     };
     users.push(newUser);
+
     try {
       const writeFile = async () => {
         await fs.writeFile("users.json", JSON.stringify(users, null, 1));
@@ -59,7 +62,43 @@ app.post("/api/user/:userId", validate(userSchema), (req, res) => {
       res.status(500).json({ error: "Error writing to file" });
     }
   } else {
-    console.log(`User ${existingUser.user} already exists`);
+    if (!existingUser.userIdWithGoogle && req.body.userIdWithGoogle) {
+      console.log("userIdWithGoogle missing");
+      existingUser = {
+        ...existingUser,
+        userIdWithGoogle: req.body.userIdWithGoogle,
+      };
+    }
+    if (!existingUser.userIdWithGithub && req.body.userIdWithGithub) {
+      console.log("userIdWithGithub missing");
+      existingUser = {
+        ...existingUser,
+        userIdWithGithub: req.body.userIdWithGithub,
+      };
+    }
+    if (existingUser.userIdWithGoogle && existingUser.userIdWithGithub) {
+      console.log(`User ${existingUser.user} already exists`);
+    }
+
+    const updatedUsers = users.map((user) => {
+      if (user.user === existingUser.user) {
+        return existingUser;
+      } else {
+        return user;
+      }
+    });
+
+    try {
+      const writeFile = async () => {
+        await fs.writeFile("users.json", JSON.stringify(updatedUsers, null, 1));
+      };
+      writeFile();
+      res.status(201).json(req.body);
+      console.log(`User ${existingUser.user} updated successfully`);
+    } catch (error) {
+      console.error("Error writing to file:", error);
+      res.status(500).json({ error: "Error writing to file" });
+    }
   }
 });
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IImage } from "../models/IImage";
 import { SearchForm } from "../components/SearchForm";
 import { ShowResult } from "../components/ShowResult";
-import { getImages } from "../services/imageService";
+import { getImagesFromGoogleSearch } from "../services/imageService";
 
 export const ImageSearch = () => {
   const [images, setImages] = useState<IImage[]>(
@@ -26,7 +26,7 @@ export const ImageSearch = () => {
 
     try {
       setIsLoading(true);
-      const data = await getImages(searchWord);
+      const data = await getImagesFromGoogleSearch(searchWord);
 
       if (data.spelling) {
         localStorage.setItem("Images", "[]");

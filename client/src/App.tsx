@@ -4,13 +4,10 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { useEffect, useState } from "react";
 import { LikedImage } from "./models/LikedImage";
-import {
-  ILikeImageContext,
-  LikeImageContext,
-} from "./contexts/LikeImageContext";
+import { ILikeImageContext, LikeImageContext } from "./contexts/LikeImageContext";
 import { IImage } from "./models/IImage";
-import axios from "axios";
 import { AuthContext, IAuthContext } from "./contexts/AuthContext";
+import { createNewUser, getImagesFromServer, saveUpdatedFavorite } from "./services/imageService";
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
@@ -37,19 +34,10 @@ function App() {
 
   useEffect(() => {
     if (auth.userName) {
-      const createNewUser = async () => {
-        await axios.post(
-          `http://localhost:3000/api/user/${auth.userName}`,
-          auth
-        );
-      };
-      createNewUser();
+      createNewUser(auth.userName, auth);
 
       const getSavedFavoriteImages = async () => {
-        const response = await axios.get(
-          `http://localhost:3000/api/user/${auth.userName}`
-        );
-        const savedFavoriteImages = response.data.favoriteImages;
+        const savedFavoriteImages = await getImagesFromServer(auth.userName);
         if (savedFavoriteImages) {
           setLikeImage({
             ...likeImage,
@@ -79,10 +67,7 @@ function App() {
 
       const saveLikedImage = async () => {
         if (auth.userName) {
-          await axios.put(
-            `http://localhost:3000/api/user/${auth.userName}`,
-            updatedLikedImages
-          );
+          saveUpdatedFavorite(auth.userName, updatedLikedImages);
         } else {
           console.log(`User ${auth.userName} not found`);
         }
@@ -93,7 +78,7 @@ function App() {
     }
   };
 
-  likeImage.remove = (removedImage: LikedImage) => {
+  likeImage.remove = (removedImage: IImage) => {
     const updatedLikedImages = likeImage.likedImages.filter(
       (image) => image.title !== removedImage.title
     );
@@ -106,10 +91,7 @@ function App() {
       setLikeImage({ ...likeImage, likedImages: updatedLikedImages });
       const removeLikedImage = async () => {
         if (auth.userName) {
-          await axios.put(
-            `http://localhost:3000/api/user/${auth.userName}`,
-            updatedLikedImages
-          );
+          saveUpdatedFavorite(auth.userName, updatedLikedImages);
         } else {
           console.log(`User ${auth.userName} not found`);
         }

@@ -1,6 +1,6 @@
 # Image Search App
 
-### Starta applikationen
+### Starta applikationen:
 
 #### Kilent:
 1. `cd client`
@@ -17,9 +17,11 @@
 ## Beskrivning
 I den här uppgiften skall ni skapa en fullstack applikation och integrera två tredjepart-system; Google Custom Search och Auth0. 
 Applikationen skall byggas headless med en React-frontend och en Node(express)-backend. 
+
 På sidan skall man kunna logga in med sitt Google eller GitHub konto. Väl inloggad skall man kunna söka efter bilder och se resultatet. 
-Man skall kunna spara en bild som läggs till i sin lista av favoritbilder. 
-När man sparar en bild skickas ett anrop till servern som lagrar informationen i en JSON-fil. 
+
+Man skall kunna spara en bild som läggs till i sin lista av favoritbilder. När man sparar en bild skickas ett anrop till servern som lagrar informationen i en JSON-fil. 
+
 Sidan skall även kunna visa en lista över ”mina favoritbilder”. Varje användare har sin egna lista över favoritbilder. 
 
 ## Kravlista

@@ -1,13 +1,13 @@
 # Image Search App
 
-## Starta applikationen
+### Starta applikationen
 
-### Kilent:
+#### Kilent:
 1. `cd client`
 2. `npm install`
 3. `npm run dev`
 
-### server:
+#### server:
 1. `cd server`
 2. `npm install`
 3. `nodemon server`

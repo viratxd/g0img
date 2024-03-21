@@ -8,7 +8,7 @@ export const Header = () => {
 
   return (
     <header>
-      <p className="header-login">Login as {userName}</p>
+      <p className="header-login">Logged in as {userName}</p>
       <div className="header-right">
         <nav>
           <ul>

@@ -11,21 +11,22 @@ export const Favorite = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
     const getFavoriteImages = async () => {
       if (userName) {
         try {
+          setIsLoading(true);
           const imagesFromServer = await getImagesFromServer(userName);
           setImages(imagesFromServer);
         } catch (error) {
           console.error("axios get error", error);
+        } finally {
+          setIsLoading(false);
         }
       } else {
         console.log(`User ${userName} not found`);
       }
     };
     getFavoriteImages();
-    setIsLoading(false);
   }, [likedImages]);
 
   return (

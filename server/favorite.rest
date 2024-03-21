@@ -5,12 +5,13 @@ Content-Type: application/json
 
 {
     "isAuthenticated": true,
-    "userId": "github|118256347",
+    "userIdWithGithub": "github|118256347",
+    "userIdWithGoogle": "",
     "userName": "Aoi Tanaka"
 }
 
 ###
-PUT http://localhost:3000/api/users
+PUT http://localhost:3000/api/user/Aoi%20Tanaka
 Content-Type: application/json
 
 [

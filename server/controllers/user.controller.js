@@ -25,23 +25,19 @@ const postUser = async (req, res) => {
     };
     users.push(newUser);
     await writeUser(res, req, users);
+
   } else {
     if (!existingUser.userIdWithGoogle && req.body.userIdWithGoogle) {
-      console.log("userIdWithGoogle missing");
       existingUser = {
         ...existingUser,
         userIdWithGoogle: req.body.userIdWithGoogle,
       };
     }
     if (!existingUser.userIdWithGithub && req.body.userIdWithGithub) {
-      console.log("userIdWithGithub missing");
       existingUser = {
         ...existingUser,
         userIdWithGithub: req.body.userIdWithGithub,
       };
-    }
-    if (existingUser.userIdWithGoogle && existingUser.userIdWithGithub) {
-      console.log(`User ${existingUser.user} already exists`);
     }
 
     const updatedUsers = users.map((user) => {

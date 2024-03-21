@@ -9,7 +9,6 @@ export const getImagesFromGoogleSearch = async (searchWord: string) => {
       import.meta.env.VITE_GOOGLE_SEARCH_ENGINE_ID
     }&q=${searchWord}&num=10&searchType=image`
   );
-
   return response.data;
 };
 
@@ -17,7 +16,6 @@ const API_URL = "http://localhost:3000/api/user/";
 
 export const getImagesFromServer = async (userName: string) => {
   const response = await get(API_URL + userName);
-
   return response.data.favoriteImages;
 };
 

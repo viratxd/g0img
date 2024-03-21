@@ -4,10 +4,17 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { useEffect, useState } from "react";
 import { LikedImage } from "./models/LikedImage";
-import { ILikeImageContext, LikeImageContext } from "./contexts/LikeImageContext";
+import {
+  ILikeImageContext,
+  LikeImageContext,
+} from "./contexts/LikeImageContext";
 import { IImage } from "./models/IImage";
 import { AuthContext, IAuthContext } from "./contexts/AuthContext";
-import { createNewUser, getImagesFromServer, saveUpdatedFavorite } from "./services/imageService";
+import {
+  createNewUser,
+  getImagesFromServer,
+  saveUpdatedFavorite,
+} from "./services/imageService";
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
@@ -37,17 +44,27 @@ function App() {
       createNewUser(auth.userName, auth);
 
       const getSavedFavoriteImages = async () => {
-        const savedFavoriteImages = await getImagesFromServer(auth.userName);
-        if (savedFavoriteImages) {
-          setLikeImage({
-            ...likeImage,
-            likedImages: savedFavoriteImages,
-          });
+        try {
+          const savedFavoriteImages = await getImagesFromServer(auth.userName);
+          if (savedFavoriteImages) {
+            setLikeImage({...likeImage, likedImages: savedFavoriteImages });
+          }
+        } catch (error) {
+          console.error("Error getting saved favorite images", error);
         }
       };
       getSavedFavoriteImages();
     }
   }, [auth]);
+
+  const updateFavoriteImages = async (updatedFavoriteImages: LikedImage[]) => {
+    setLikeImage({ ...likeImage, likedImages: updatedFavoriteImages });
+    try {
+      await saveUpdatedFavorite(auth.userName, updatedFavoriteImages);
+    } catch (error) {
+      console.error("Error update favorite images", error);
+    }
+  };
 
   likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
@@ -55,31 +72,19 @@ function App() {
     );
 
     if (!existingImages) {
-      const updatedLikedImages = [
+      const updatedFavoriteImages = [
         ...likeImage.likedImages,
         new LikedImage(newLikedImage.link, newLikedImage.title),
       ];
 
-      setLikeImage({
-        ...likeImage,
-        likedImages: updatedLikedImages,
-      });
-
-      const saveLikedImage = async () => {
-        if (auth.userName) {
-          saveUpdatedFavorite(auth.userName, updatedLikedImages);
-        } else {
-          console.log(`User ${auth.userName} not found`);
-        }
-      };
-      saveLikedImage();
+      updateFavoriteImages(updatedFavoriteImages);
     } else {
       window.alert("This image is already existing in your favorite list.");
     }
   };
 
   likeImage.remove = (removedImage: IImage) => {
-    const updatedLikedImages = likeImage.likedImages.filter(
+    const updatedFavoriteImages = likeImage.likedImages.filter(
       (image) => image.title !== removedImage.title
     );
 
@@ -88,15 +93,7 @@ function App() {
     );
 
     if (confirm) {
-      setLikeImage({ ...likeImage, likedImages: updatedLikedImages });
-      const removeLikedImage = async () => {
-        if (auth.userName) {
-          saveUpdatedFavorite(auth.userName, updatedLikedImages);
-        } else {
-          console.log(`User ${auth.userName} not found`);
-        }
-      };
-      removeLikedImage();
+      updateFavoriteImages(updatedFavoriteImages);
     }
   };
 

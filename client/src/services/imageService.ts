@@ -12,7 +12,7 @@ export const getImagesFromGoogleSearch = async (searchWord: string) => {
   return response.data;
 };
 
-const API_URL = `http://localhost:${import.meta.env.VITE_PORT}/api/images/`;
+const API_URL = `${import.meta.env.VITE_APP_API_URL}/api/images/`;
 
 export const getImagesFromDB = async (userName: string) => {
   const response = await get(API_URL + userName);

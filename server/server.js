@@ -1,7 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const usersRouter = require("./routers/users.router")
-const userRouter = require("./routers/user.router")
+const usersRouter = require("./routers/users.router");
+const userRouter = require("./routers/user.router");
+const imagesRouter = require("./routers/images.router");
+const connectDB = require("./db");
+
+require("dotenv").config();
 
 const app = express();
 
@@ -9,8 +13,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routers
-app.use("/api/users", usersRouter)
-app.use("/api/user", userRouter)
+// Connect to MongoDB
+connectDB();
 
-app.listen(3000, () => console.log("Server is up and running..."));
+// Routers
+app.use("/api/users", usersRouter);
+app.use("/api/user", userRouter);
+app.use("/api/images", imagesRouter);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

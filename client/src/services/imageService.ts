@@ -1,5 +1,5 @@
 import { IImage } from "../models/IImage";
-import { get, post, put } from "./serviceBase";
+import { get, post, remove } from "./serviceBase";
 
 export const getImagesFromGoogleSearch = async (searchWord: string) => {
   const response = await get(
@@ -12,17 +12,20 @@ export const getImagesFromGoogleSearch = async (searchWord: string) => {
   return response.data;
 };
 
-const API_URL = "http://localhost:3000/api/user/";
+const API_URL = `http://localhost:${import.meta.env.VITE_PORT}/api/images/`;
 
-export const getImagesFromServer = async (userName: string) => {
+export const getImagesFromDB = async (userName: string) => {
   const response = await get(API_URL + userName);
-  return response.data.favoriteImages;
+  return response.data;
 };
 
-export const createNewUser = async (userName: string, userData: object) => {
-  return await post(API_URL + userName, userData)
+export const addFavoriteImage = async (userName: string, image: IImage) => {
+  return await post(API_URL + userName, image);
 };
 
-export const saveUpdatedFavorite = async (userName: string, images: IImage[]) => {
-  return await put(API_URL + userName, images)
+export const deleteFavoriteImage = async (
+  userName: string,
+  imageId: string
+) => {
+  return await remove(API_URL + userName, { imageId });
 };

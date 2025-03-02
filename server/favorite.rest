@@ -1,6 +1,6 @@
-GET http://localhost:3000/api/users
+GET http://localhost:5173/api/users
 ###
-POST http://localhost:3000/api/users
+POST http://localhost:5173/api/users
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:3000/api/user/Aoi%20Tanaka
+PUT http://localhost:5173/api/user/Aoi%20Tanaka
 Content-Type: application/json
 
 [

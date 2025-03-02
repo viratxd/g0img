@@ -1,54 +1,55 @@
-const { readUsers } = require("../fs/readUsers");
-const { writeUser } = require("../fs/writeUser");
+const User = require("../models/User");
 
 const getUser = async (req, res) => {
-  const users = await readUsers();
-  const user = users.find((user) => user.user == req.params.userName);
-  if (user) {
-    res.status(200).json(user);
-    console.log(`User ${user.user}'s data loaded into the server successfully`);
-  } else {
-    console.log(`User ${req.params.userName} not found`);
+  try {
+    const user = await User.findOne({ userName: req.params.userName });
+
+    if (user) {
+      res.status(200).json(user);
+      console.log(
+        `User ${user.userName}'s data loaded into the server successfully`
+      );
+    } else {
+      console.log(`User ${req.params.userName} not found`);
+    }
+  } catch (error) {
+    console.error("Error reading user from database:", error);
+    res.status(500).send("Error fetching user data");
   }
 };
 
 const postUser = async (req, res) => {
-  const users = await readUsers();
-  let existingUser = users.find((user) => user.user === req.params.userName);
+  try {
+    let existingUser = await User.findOne({ userName: req.body.userName });
 
-  if (!existingUser) {
-    const newUser = {
-      user: req.body.userName,
-      userIdWithGoogle: req.body.userIdWithGoogle,
-      userIdWithGithub: req.body.userIdWithGithub,
-      favoriteImages: [],
-    };
-    users.push(newUser);
-    await writeUser(res, req, users);
+    if (!existingUser) {
+      const newUser = new User({
+        isAuthenticated: req.body.isAuthenticated,
+        userName: req.body.userName,
+        userIdWithGoogle: req.body.userIdWithGoogle || "",
+        userIdWithGithub: req.body.userIdWithGithub || "",
+      });
 
-  } else {
-    if (!existingUser.userIdWithGoogle && req.body.userIdWithGoogle) {
-      existingUser = {
-        ...existingUser,
-        userIdWithGoogle: req.body.userIdWithGoogle,
-      };
-    }
-    if (!existingUser.userIdWithGithub && req.body.userIdWithGithub) {
-      existingUser = {
-        ...existingUser,
-        userIdWithGithub: req.body.userIdWithGithub,
-      };
-    }
-
-    const updatedUsers = users.map((user) => {
-      if (user.user === existingUser.user) {
-        return existingUser;
-      } else {
-        return user;
+      await newUser.save();
+      res.status(201).json(newUser);
+      console.log(
+        `New user ${newUser.userName} created and saved successfully`
+      );
+    } else {
+      if (req.body.userIdWithGoogle && !existingUser.userIdWithGoogle) {
+        existingUser.userIdWithGoogle = req.body.userIdWithGoogle;
       }
-    });
+      if (req.body.userIdWithGithub && !existingUser.userIdWithGithub) {
+        existingUser.userIdWithGithub = req.body.userIdWithGithub;
+      }
 
-    await writeUser(res, req, updatedUsers);
+      await existingUser.save();
+      res.status(200).json(existingUser);
+      console.log(`User ${existingUser.userName} updated successfully`);
+    }
+  } catch (error) {
+    console.error("Error saving or updating user:", error);
+    res.status(500).json({ error: "Error saving or updating user" });
   }
 };
 

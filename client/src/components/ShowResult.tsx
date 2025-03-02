@@ -50,7 +50,7 @@ export const ShowResult = ({
               <figure key={image.link} className="image">
                 <a onClick={() => add(image)}>
                   {likedImages.filter(
-                    (likedImage) => image.title === likedImage.title
+                    (likedImage) => image.title === likedImage.image.title
                   ).length > 0 ? (
                     <span
                       className="material-symbols-outlined"

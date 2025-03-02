@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { LikeImageContext } from "../contexts/LikeImageContext";
-import { IImage } from "../models/IImage";
+import { IFavoriteImage } from "../models/IFavoriteImage";
 import { AuthContext } from "../contexts/AuthContext";
-import { getImagesFromServer } from "../services/imageService";
+import { getImagesFromDB } from "../services/imageService";
 
 export const Favorite = () => {
   const { likedImages, remove } = useContext(LikeImageContext);
   const { userName } = useContext(AuthContext);
-  const [images, setImages] = useState<IImage[]>([]);
+  const [images, setImages] = useState<IFavoriteImage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export const Favorite = () => {
       if (userName) {
         try {
           setIsLoading(true);
-          const imagesFromServer = await getImagesFromServer(userName);
+          const imagesFromServer = await getImagesFromDB(userName);
           setImages(imagesFromServer);
         } catch (error) {
           console.error("axios get error", error);
@@ -28,7 +28,8 @@ export const Favorite = () => {
     };
     getFavoriteImages();
   }, [likedImages]);
-
+  console.log("images", images);
+  
   return (
     <div className="favorite">
       {isLoading ? (
@@ -36,11 +37,11 @@ export const Favorite = () => {
       ) : (
         <div className="favorite-images">
           {images.map((image) => (
-            <figure key={image.link} className="image">
-              <a onClick={() => remove(image)}>
+            <figure key={image._id} className="image">
+              <a onClick={() => remove(image._id)}>
                 <span className="material-symbols-outlined">heart_minus</span>
               </a>
-              <img src={image.link} alt={image.title} />
+              <img src={image.image.link} alt={image.image.title} />
             </figure>
           ))}
         </div>

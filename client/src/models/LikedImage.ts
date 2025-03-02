@@ -1,6 +1,6 @@
 export class LikedImage {
   constructor(
-    public link: string, 
-    public title: string
+    public link: string,
+    public title: string,
   ) {}
 }

@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { LikedImage } from "../models/LikedImage";
 import { IImage } from "../models/IImage";
+import { IFavoriteImage } from "../models/IFavoriteImage";
 
 export interface ILikeImageContext {
-    likedImages: LikedImage[];
+    likedImages: IFavoriteImage[];
     add: (newLikedImage: IImage) => void;
-    remove: (removedImage: LikedImage) => void
+    remove: (removedImage: string) => void
 }
 
 export const LikeImageContext = createContext<ILikeImageContext>({

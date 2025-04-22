@@ -20,32 +20,30 @@ const getUser = async (req, res) => {
 
 const postUser = async (req, res) => {
   try {
-    let existingUser = await User.findOne({ userName: req.body.userName });
+    let existingUser = await User.findOne({ email: req.body.email });
 
     if (!existingUser) {
       const newUser = new User({
-        isAuthenticated: req.body.isAuthenticated,
-        userName: req.body.userName,
-        userIdWithGoogle: req.body.userIdWithGoogle || "",
-        userIdWithGithub: req.body.userIdWithGithub || "",
+        userName: "",
+        email: req.body.email,
       });
 
       await newUser.save();
       res.status(201).json(newUser);
       console.log(
-        `New user ${newUser.userName} created and saved successfully`
+        `New user ${newUser.email} created and saved successfully`
       );
     } else {
-      if (req.body.userIdWithGoogle && !existingUser.userIdWithGoogle) {
+     /*  if (req.body.userIdWithGoogle && !existingUser.userIdWithGoogle) {
         existingUser.userIdWithGoogle = req.body.userIdWithGoogle;
       }
       if (req.body.userIdWithGithub && !existingUser.userIdWithGithub) {
         existingUser.userIdWithGithub = req.body.userIdWithGithub;
-      }
+      } */
 
       await existingUser.save();
       res.status(200).json(existingUser);
-      console.log(`User ${existingUser.userName} updated successfully`);
+      console.log(`User ${existingUser.email} updated successfully`);
     }
   } catch (error) {
     console.error("Error saving or updating user:", error);

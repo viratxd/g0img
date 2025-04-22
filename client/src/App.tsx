@@ -9,13 +9,13 @@ import {
   LikeImageContext,
 } from "./contexts/LikeImageContext";
 import { IImage } from "./models/IImage";
-import { AuthContext, IAuthContext } from "./contexts/AuthContext";
 import {
   getImagesFromDB,
   addFavoriteImage,
   deleteFavoriteImage,
 } from "./services/imageService";
-import { createNewUser } from "./services/userService";
+import { fetchUserDataFromDB } from "./services/userService";
+import { UserContext, IUserContext } from "./contexts/UserContext";
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
@@ -25,29 +25,37 @@ function App() {
     remove: () => {},
   });
 
-  const [auth, setAuth] = useState<IAuthContext>({
-    isAuthenticated: true,
-    userIdWithGoogle: "",
-    userIdWithGithub: "",
+  const [userInfo, setUserInfo] = useState<IUserContext>({
     userName: "",
+    email: "",
   });
 
   useEffect(() => {
-    setAuth({
-      isAuthenticated: isAuthenticated,
-      userIdWithGoogle: user?.sub?.includes("google") ? user.sub : "",
-      userIdWithGithub: user?.sub?.includes("github") ? user.sub : "",
-      userName: user?.name ?? "",
-    });
+    if (user && user.sub) {
+      const fetchUserInfo = async () => {
+        try {
+          const response = await fetchUserDataFromDB(user.sub!);
+
+          if (response.data) {
+            setUserInfo({
+              email: response.data.email ?? "",
+              userName: response.data.userName ?? "",
+            });
+          }
+        } catch (error) {
+          console.error("Error getting userInfo from DB", error);
+        }
+      };
+
+      fetchUserInfo();
+    }
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (auth.userName) {
-      createNewUser(auth.userName, auth);
-
+    if (userInfo) {
       const getSavedFavoriteImages = async () => {
         try {
-          const savedFavoriteImages = await getImagesFromDB(auth.userName);
+          const savedFavoriteImages = await getImagesFromDB(userInfo.userName);
           if (savedFavoriteImages) {
             setLikeImage({ ...likeImage, likedImages: savedFavoriteImages });
           }
@@ -57,7 +65,7 @@ function App() {
       };
       getSavedFavoriteImages();
     }
-  }, [auth]);
+  }, [userInfo]);
 
   likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
@@ -70,7 +78,7 @@ function App() {
         newLikedImage.title
       );
 
-      addFavoriteImage(auth.userName, newFavoriteImage);
+      addFavoriteImage(userInfo.userName, newFavoriteImage);
     } else {
       window.alert("This image is already existing in your favorite list.");
     }
@@ -82,18 +90,18 @@ function App() {
     );
 
     if (confirm) {
-      deleteFavoriteImage(auth.userName, removedImage);
+      deleteFavoriteImage(userInfo.userName, removedImage);
     }
   };
 
   return (
     <>
       {isAuthenticated ? (
-        <AuthContext.Provider value={auth}>
+        <UserContext.Provider value={userInfo}>
           <LikeImageContext.Provider value={likeImage}>
             <RouterProvider router={router} />
           </LikeImageContext.Provider>
-        </AuthContext.Provider>
+        </UserContext.Provider>
       ) : (
         <>
           <LoginPage />

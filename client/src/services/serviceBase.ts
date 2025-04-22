@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const get = async (url: string) => {
-  return await axios.get(url);
+export const get = async (url: string, data: object) => {
+  return await axios.get(url, { params: data });
 };
 
 export const post = async (url: string, data: object) => {

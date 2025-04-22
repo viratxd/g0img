@@ -1,7 +1,7 @@
-import { post } from "./serviceBase";
+import { get } from "./serviceBase";
 
 const API_URL = `${import.meta.env.VITE_APP_API_URL}/api/user/`;
 
-export const createNewUser = async (userName: string, userData: object) => {
-  return await post(API_URL + userName, userData)
+export const fetchUserDataFromDB = async (auth0Id: string) => {
+  return await get(API_URL, { auth0Id });
 };

@@ -2,7 +2,7 @@ const User = require("../models/User");
 
 const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ auth0Id: req.body.auth0Id });
+    const user = await User.findOne({ auth0Id: req.query.auth0Id });
 
     if (user) {
       res.status(200).json(user);

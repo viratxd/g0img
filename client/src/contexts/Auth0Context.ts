@@ -1,13 +1,11 @@
 import { createContext } from "react";
 
-export interface IAuthContext {
+export interface IAuth0Context {
     isAuthenticated: boolean;
     email: string;
-    userName: string
 }
 
-export const AuthContext = createContext<IAuthContext>({
+export const Auth0Context = createContext<IAuth0Context>({
     isAuthenticated: true,
     email: "",
-    userName: ""
 })

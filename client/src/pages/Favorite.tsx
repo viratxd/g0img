@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { LikeImageContext } from "../contexts/LikeImageContext";
 import { IFavoriteImage } from "../models/IFavoriteImage";
-import { AuthContext } from "../contexts/AuthContext";
+import { UserContext } from "../contexts/UserContext";
 import { getImagesFromDB } from "../services/imageService";
 
 export const Favorite = () => {
   const { likedImages, remove } = useContext(LikeImageContext);
-  const { userName } = useContext(AuthContext);
+  const { userName } = useContext(UserContext);
   const [images, setImages] = useState<IFavoriteImage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +29,7 @@ export const Favorite = () => {
     getFavoriteImages();
   }, [likedImages]);
   console.log("images", images);
-  
+
   return (
     <div className="favorite">
       {isLoading ? (

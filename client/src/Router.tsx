@@ -3,6 +3,7 @@ import { Favorite } from "./pages/Favorite";
 import { ImageSearch } from "./pages/ImageSearch";
 import { NotFound } from "./pages/NotFound";
 import { Layout } from "./pages/Layout";
+import { Profile } from "./pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: "/favorite",
         element: <Favorite />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ]
   }

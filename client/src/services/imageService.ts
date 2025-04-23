@@ -14,8 +14,8 @@ export const getImagesFromGoogleSearch = async (searchWord: string) => {
 
 const API_URL = `${import.meta.env.VITE_APP_API_URL}/api/images`;
 
-export const getImagesFromDB = async (userName: string) => {
-  const response = await get(API_URL + userName);
+export const getImagesFromDB = async (userId: string) => {
+  const response = await get(API_URL, { userId });
   return response.data;
 };
 

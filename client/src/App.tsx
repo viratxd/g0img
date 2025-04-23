@@ -32,45 +32,38 @@ function App() {
     updateUserName: () => {},
   });
 
-  // Get user info from DB
+  // Get user info & user's favorite images from DB
   useEffect(() => {
-    if (user && user.sub) {
-      const fetchUserInfo = async () => {
-        try {
-          const response = await fetchUserDataFromDB(user.sub!);
+    const fetchUserInfo = async () => {
+      if (!isAuthenticated || !user?.sub) return;
 
-          if (response.data) {
-            setUserInfo({
-              id: response.data._id ?? "",
-              email: response.data.email ?? "",
-              userName: response.data.userName ?? "",
-            });
-          }
-        } catch (error) {
-          console.error("Error getting userInfo from DB", error);
+      try {
+        const response = await fetchUserDataFromDB(user.sub);
+
+        if (!response) return;
+
+        const { _id, email, userName } = response.data;
+
+        setUserInfo({
+          id: _id ?? "",
+          email: email ?? "",
+          userName: userName ?? "",
+        });
+        
+        const savedFavoriteImages = await getImagesFromDB(_id);
+        
+        if (savedFavoriteImages) {
+          setLikeImage((prev) => ({
+            ...prev,
+            likedImages: savedFavoriteImages,
+          }));
         }
-      };
-
-      fetchUserInfo();
-    }
-  }, [isAuthenticated]);
-
-  // Get saved favorite images from DB
-  /*   useEffect(() => {
-    if (userInfo) {
-      const getSavedFavoriteImages = async () => {
-        try {
-          const savedFavoriteImages = await getImagesFromDB(userInfo.userName);
-          if (savedFavoriteImages) {
-            setLikeImage({ ...likeImage, likedImages: savedFavoriteImages });
-          }
-        } catch (error) {
-          console.error("Error getting saved favorite images", error);
-        }
-      };
-      getSavedFavoriteImages();
-    }
-  }, [userInfo]); */
+      } catch (error) {
+        console.error("Error getting userInfo from DB", error);
+      }
+    };
+    fetchUserInfo();
+  }, [isAuthenticated, user]);
 
   // Function: update user name
   userInfo.updateUserName = (newUserName: string) => {

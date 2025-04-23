@@ -12,15 +12,15 @@ export const getImagesFromGoogleSearch = async (searchWord: string) => {
   return response.data;
 };
 
-const API_URL = `${import.meta.env.VITE_APP_API_URL}/api/images/`;
+const API_URL = `${import.meta.env.VITE_APP_API_URL}/api/images`;
 
 export const getImagesFromDB = async (userName: string) => {
   const response = await get(API_URL + userName);
   return response.data;
 };
 
-export const addFavoriteImage = async (userName: string, image: IImage) => {
-  return await post(API_URL + userName, image);
+export const addFavoriteImage = async (userId: string, image: IImage) => {
+  return await post(API_URL, { userId, image });
 };
 
 export const deleteFavoriteImage = async (

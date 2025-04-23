@@ -88,7 +88,7 @@ function App() {
   };
 
   // Function: add favorite image
-  /*   likeImage.add = (newLikedImage: IImage) => {
+  likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
       (image) => image.image.link === newLikedImage.link
     );
@@ -99,11 +99,11 @@ function App() {
         newLikedImage.title
       );
 
-      addFavoriteImage(userInfo.userName, newFavoriteImage);
+      addFavoriteImage(userInfo.id, newFavoriteImage);
     } else {
       window.alert("This image is already existing in your favorite list.");
     }
-  }; */
+  };
 
   // Function: remove favorite image
   /*   likeImage.remove = (removedImage: string) => {

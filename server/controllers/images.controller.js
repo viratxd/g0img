@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const FavoriteImage = require("../models/FavoriteImage");
-const { log } = require("console");
 
 const getFavoriteImages = async (req, res) => {
   try {
@@ -23,17 +22,18 @@ const getFavoriteImages = async (req, res) => {
 
 const addFavoriteImage = async (req, res) => {
   try {
-    const user = await User.findOne({ userName: req.params.userName });
+    const { userId, image } = req.body;
+    const user = await User.findById(userId);
 
     if (!user) {
       return res
         .status(404)
-        .json({ error: `User ${req.params.userName} not found` });
+        .json({ error: `User ${req.body.userId} not found` });
     }
 
     const favoriteImage = {
-      userId: user._id,
-      image: req.body,
+      userId,
+      image,
     };
 
     await FavoriteImage.insertOne(favoriteImage);

@@ -7,7 +7,7 @@ const {
 } = require("../validators/favoriteImage.validator");
 
 router.get("/:userName", getFavoriteImages);
-router.post("/:userName", validate(favoriteImageSchema), addFavoriteImage);
+router.post("/", validate(favoriteImageSchema), addFavoriteImage);
 router.delete("/:userName", deleteFavoriteImage);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const FavoriteImage = require("../models/FavoriteImage");
 const getFavoriteImages = async (req, res) => {
   try {
     const { userId } = req.query;
-    
+
     const user = await User.findOne({ _id: userId });
 
     if (!user) {
@@ -49,7 +49,9 @@ const addFavoriteImage = async (req, res) => {
 
 const deleteFavoriteImage = async (req, res) => {
   try {
-    const user = await User.findOne({ userName: req.params.userName });
+    const { userId, imageId } = req.body;
+
+    const user = await User.findById(userId);
 
     if (!user) {
       return res
@@ -57,7 +59,7 @@ const deleteFavoriteImage = async (req, res) => {
         .json({ error: `User ${req.params.userName} not found` });
     }
 
-    await FavoriteImage.deleteOne({ _id: req.body.imageId });
+    await FavoriteImage.deleteOne({ _id: imageId });
 
     res.status(200).json({ message: "Favorite images deleted successfully" });
   } catch (error) {

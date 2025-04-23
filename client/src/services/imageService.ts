@@ -23,9 +23,6 @@ export const addFavoriteImage = async (userId: string, image: IImage) => {
   return await post(API_URL, { userId, image });
 };
 
-export const deleteFavoriteImage = async (
-  userName: string,
-  imageId: string
-) => {
-  return await remove(API_URL + userName, { imageId });
+export const deleteFavoriteImage = async (userId: string, imageId: string) => {
+  return await remove(API_URL, { data: { userId, imageId } });
 };

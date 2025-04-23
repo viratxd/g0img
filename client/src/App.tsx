@@ -49,9 +49,9 @@ function App() {
           email: email ?? "",
           userName: userName ?? "",
         });
-        
+
         const savedFavoriteImages = await getImagesFromDB(_id);
-        
+
         if (savedFavoriteImages) {
           setLikeImage((prev) => ({
             ...prev,
@@ -99,15 +99,15 @@ function App() {
   };
 
   // Function: remove favorite image
-  /*   likeImage.remove = (removedImage: string) => {
+  likeImage.remove = (removedImage: string) => {
     const confirm = window.confirm(
       "Are you sure you want to remove this image from your list?"
     );
 
     if (confirm) {
-      deleteFavoriteImage(userInfo.userName, removedImage);
+      deleteFavoriteImage(userInfo.id, removedImage);
     }
-  }; */
+  };
 
   return (
     <>

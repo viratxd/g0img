@@ -1,13 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const { addFavoriteImage, getFavoriteImages, deleteFavoriteImage } = require("../controllers/images.controller");
+const {
+  addFavoriteImage,
+  getFavoriteImages,
+  deleteFavoriteImage,
+} = require("../controllers/images.controller");
 const { validate } = require("../validate");
 const {
-  favoriteImageSchema,
+  addedImageSchema,
+  removedImageSchema,
 } = require("../validators/favoriteImage.validator");
 
 router.get("/", getFavoriteImages);
-router.post("/", validate(favoriteImageSchema), addFavoriteImage);
-router.delete("/:userName", deleteFavoriteImage);
+router.post("/", validate(addedImageSchema), addFavoriteImage);
+router.delete("/", validate(removedImageSchema), deleteFavoriteImage);
 
 module.exports = router;

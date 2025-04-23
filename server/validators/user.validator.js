@@ -1,8 +1,13 @@
 const Joi = require("joi");
 
-const userSchema = Joi.object({
+const userCreateSchema = Joi.object({
   email: Joi.string().required(),
   auth0Id: Joi.string().required(),
 });
 
-module.exports = { userSchema };
+const userUpdateSchema = Joi.object({
+  userId: Joi.string().required(),
+  userName: Joi.string().required(),
+});
+
+module.exports = { userCreateSchema, userUpdateSchema };

@@ -32,11 +32,9 @@ const postUser = async (req, res) => {
 
       await newUser.save();
       res.status(201).json(newUser);
-      console.log(
-        `New user ${newUser.auth0Id} created and saved successfully`
-      );
+      console.log(`New user ${newUser.auth0Id} created and saved successfully`);
     } else {
-     /*  if (req.body.userIdWithGoogle && !existingUser.userIdWithGoogle) {
+      /*  if (req.body.userIdWithGoogle && !existingUser.userIdWithGoogle) {
         existingUser.userIdWithGoogle = req.body.userIdWithGoogle;
       }
       if (req.body.userIdWithGithub && !existingUser.userIdWithGithub) {
@@ -53,4 +51,23 @@ const postUser = async (req, res) => {
   }
 };
 
-module.exports = { getUser, postUser };
+const putUser = async (req, res) => {
+  try {
+    const { userId, userName } = req.body;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.userName = userName;
+    await user.save();
+    res.status(200).json(user);
+    console.log(`User ${userId} updated successfully`);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Error updating user" });
+  }
+};
+
+module.exports = { getUser, postUser, putUser };

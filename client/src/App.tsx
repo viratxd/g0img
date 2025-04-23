@@ -14,7 +14,7 @@ import {
   addFavoriteImage,
   deleteFavoriteImage,
 } from "./services/imageService";
-import { fetchUserDataFromDB } from "./services/userService";
+import { fetchUserDataFromDB, putUserDataToDB } from "./services/userService";
 import { UserContext, IUserContext } from "./contexts/UserContext";
 
 function App() {
@@ -26,10 +26,13 @@ function App() {
   });
 
   const [userInfo, setUserInfo] = useState<IUserContext>({
+    id: "",
     userName: "",
     email: "",
+    updateUserName: () => {},
   });
 
+  // Get user info from DB
   useEffect(() => {
     if (user && user.sub) {
       const fetchUserInfo = async () => {
@@ -38,6 +41,7 @@ function App() {
 
           if (response.data) {
             setUserInfo({
+              id: response.data._id ?? "",
               email: response.data.email ?? "",
               userName: response.data.userName ?? "",
             });
@@ -51,7 +55,8 @@ function App() {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
+  // Get saved favorite images from DB
+  /*   useEffect(() => {
     if (userInfo) {
       const getSavedFavoriteImages = async () => {
         try {
@@ -65,9 +70,25 @@ function App() {
       };
       getSavedFavoriteImages();
     }
-  }, [userInfo]);
+  }, [userInfo]); */
 
-  likeImage.add = (newLikedImage: IImage) => {
+  // Function: update user name
+  userInfo.updateUserName = (newUserName: string) => {
+    setUserInfo((prev) => ({
+      ...prev,
+      userName: newUserName,
+    }));
+
+    putUserDataToDB(userInfo.id, newUserName);
+  };
+
+  const userContextValue: IUserContext = {
+    ...userInfo,
+    updateUserName: userInfo.updateUserName,
+  };
+
+  // Function: add favorite image
+  /*   likeImage.add = (newLikedImage: IImage) => {
     const existingImages = likeImage.likedImages.find(
       (image) => image.image.link === newLikedImage.link
     );
@@ -82,9 +103,10 @@ function App() {
     } else {
       window.alert("This image is already existing in your favorite list.");
     }
-  };
+  }; */
 
-  likeImage.remove = (removedImage: string) => {
+  // Function: remove favorite image
+  /*   likeImage.remove = (removedImage: string) => {
     const confirm = window.confirm(
       "Are you sure you want to remove this image from your list?"
     );
@@ -92,12 +114,12 @@ function App() {
     if (confirm) {
       deleteFavoriteImage(userInfo.userName, removedImage);
     }
-  };
+  }; */
 
   return (
     <>
       {isAuthenticated ? (
-        <UserContext.Provider value={userInfo}>
+        <UserContext.Provider value={userContextValue}>
           <LikeImageContext.Provider value={likeImage}>
             <RouterProvider router={router} />
           </LikeImageContext.Provider>

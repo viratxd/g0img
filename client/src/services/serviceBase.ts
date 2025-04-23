@@ -8,7 +8,7 @@ export const post = async (url: string, data: object) => {
   return await axios.post(url, data);
 };
 
-export const put = async (url: string, data: object[]) => {
+export const put = async (url: string, data: object) => {
   return await axios.put(url, data);
 };
 

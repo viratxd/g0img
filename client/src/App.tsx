@@ -3,7 +3,6 @@ import { LoginPage } from "./pages/LoginPage";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { useEffect, useState } from "react";
-import { LikedImage } from "./models/LikedImage";
 import {
   ILikeImageContext,
   LikeImageContext,
@@ -16,6 +15,7 @@ import {
 } from "./services/imageService";
 import { fetchUserDataFromDB, putUserDataToDB } from "./services/userService";
 import { UserContext, IUserContext } from "./contexts/UserContext";
+import { IFavoriteImage } from "./models/IFavoriteImage";
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
@@ -87,12 +87,21 @@ function App() {
     );
 
     if (!existingImages) {
-      const newFavoriteImage = new LikedImage(
-        newLikedImage.link,
-        newLikedImage.title
-      );
+      const newFavoriteImage: IFavoriteImage = {
+        _id: "",
+        userId: userInfo.id,
+        image: {
+          link: newLikedImage.link,
+          title: newLikedImage.title,
+        },
+      };
 
-      addFavoriteImage(userInfo.id, newFavoriteImage);
+      addFavoriteImage(userInfo.id, newFavoriteImage.image);
+
+      setLikeImage((prev) => ({
+        ...prev,
+        likedImages: [...prev.likedImages, newFavoriteImage],
+      }));
     } else {
       window.alert("This image is already existing in your favorite list.");
     }
@@ -105,9 +114,21 @@ function App() {
     );
 
     if (confirm) {
-      deleteFavoriteImage(userInfo.id, removedImage);
+      deleteFavoriteImage(userInfo.id, removedImage)
+        .then(() => {
+          setLikeImage((prev) => ({
+            ...prev,
+            likedImages: prev.likedImages.filter(
+              (image) => image._id !== removedImage
+            ),
+          }));
+        })
+        .catch((error) => {
+          console.error("Error removing image from favorites", error);
+        });
     }
   };
+  
 
   return (
     <>

@@ -19,7 +19,7 @@ import { IFavoriteImage } from "./models/IFavoriteImage";
 import LoadingSpinner from "./components/ui/LoadingSpinner";
 
 function App() {
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, isLoading } = useAuth0();
   const [likeImage, setLikeImage] = useState<ILikeImageContext>({
     likedImages: [],
     add: () => {},
@@ -36,9 +36,8 @@ function App() {
   // Get user info & user's favorite images from DB
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (!isAuthenticated || !user?.sub) return;
-
       try {
+        if (!isAuthenticated || !user?.sub) return;
         const response = await fetchUserDataFromDB(user.sub);
 
         if (!response) return;
@@ -134,7 +133,7 @@ function App() {
 
   return (
     <>
-      {loading ? (
+      {loading || isLoading ? (
         <LoadingSpinner />
       ) : isAuthenticated ? (
         <UserContext.Provider value={userContextValue}>

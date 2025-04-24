@@ -25,6 +25,10 @@ a {
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -33,16 +37,35 @@ body {
   background-color: #fcfcfc;
 }
 
+h1, h2, h3 {
+  font-family: var(--font-sans);
+  color: var(--dark-color);
+  margin: 0;
+  padding: 0;
+}
+
 h1 {
   font-size: 3.2em;
+
+  @media screen and (max-width: 768px) {
+    font-size: 2.5em;
+  }
 }
 
 h2 {
   font-size: 2.8em;
+
+  @media screen and (max-width: 768px) {
+    font-size: 2.0em;
+  }
 }
 
 h3 {
   font-size: 1.8em;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.5em;
+  }
 }
 
 button {
@@ -103,4 +126,5 @@ p {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 1.5rem;
 }

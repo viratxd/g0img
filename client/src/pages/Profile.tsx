@@ -36,9 +36,16 @@ export const Profile = () => {
               <span>{userName ? userName : email}</span>
             )}
           </p>
-          <button onClick={toggleEditing}>
-            {isEditing ? "Save" : "Edit Username"}
-          </button>
+
+          {isEditing ? (
+            <span className="material-symbols-outlined" onClick={toggleEditing}>
+              save
+            </span>
+          ) : (
+            <span className="material-symbols-outlined" onClick={toggleEditing}>
+              edit
+            </span>
+          )}
         </div>
         <p>
           <strong>Email:</strong> {email}

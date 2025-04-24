@@ -1,13 +1,16 @@
 import { IImage } from "../models/IImage";
 import { get, post, remove } from "./serviceBase";
 
-export const getImagesFromGoogleSearch = async (searchWord: string) => {
+export const getImagesFromGoogleSearch = async (
+  query: string,
+  start: number = 1
+) => {
   const response = await get(
     `https://www.googleapis.com/customsearch/v1?key=${
       import.meta.env.VITE_GOOGLE_API_KEY
     }&cx=${
       import.meta.env.VITE_GOOGLE_SEARCH_ENGINE_ID
-    }&q=${searchWord}&num=10&searchType=image`
+    }&q=${query}&num=10&searchType=image&start=${start}`
   );
   return response.data;
 };

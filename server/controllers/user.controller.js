@@ -7,10 +7,10 @@ const getUser = async (req, res) => {
     if (user) {
       res.status(200).json(user);
       console.log(
-        `User ${req.body.auth0Id}'s data loaded into the server successfully`
+        `User ${req.query.auth0Id}'s data loaded into the server successfully`
       );
     } else {
-      console.log(`User ${req.body.auth0Id} not found`);
+      console.log(`User ${req.query.auth0Id} not found`);
     }
   } catch (error) {
     console.error("Error reading user from database:", error);

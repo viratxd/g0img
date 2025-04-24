@@ -16,6 +16,7 @@ import {
 import { fetchUserDataFromDB, putUserDataToDB } from "./services/userService";
 import { UserContext, IUserContext } from "./contexts/UserContext";
 import { IFavoriteImage } from "./models/IFavoriteImage";
+import LoadingSpinner from "./components/ui/LoadingSpinner";
 
 function App() {
   const { isAuthenticated, user } = useAuth0();
@@ -24,13 +25,13 @@ function App() {
     add: () => {},
     remove: () => {},
   });
-
   const [userInfo, setUserInfo] = useState<IUserContext>({
     id: "",
     userName: "",
     email: "",
     updateUserName: () => {},
   });
+  const [loading, setLoading] = useState(true);
 
   // Get user info & user's favorite images from DB
   useEffect(() => {
@@ -60,6 +61,8 @@ function App() {
         }
       } catch (error) {
         console.error("Error getting userInfo from DB", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchUserInfo();
@@ -128,11 +131,12 @@ function App() {
         });
     }
   };
-  
 
   return (
     <>
-      {isAuthenticated ? (
+      {loading ? (
+        <LoadingSpinner />
+      ) : isAuthenticated ? (
         <UserContext.Provider value={userContextValue}>
           <LikeImageContext.Provider value={likeImage}>
             <RouterProvider router={router} />

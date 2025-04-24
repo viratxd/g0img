@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { IImage } from "../models/IImage";
 import { LikeImageContext } from "../contexts/LikeImageContext";
+import LoadingSpinner from "./ui/LoadingSpinner";
 
 interface IShowResultProps {
   searchWord: string;
@@ -24,7 +25,7 @@ export const ShowResult = ({
   return (
     <>
       {isLoading ? (
-        <span>loading</span>
+        <LoadingSpinner />
       ) : (
         <section className="result">
           <div className="result-info">

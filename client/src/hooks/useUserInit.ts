@@ -46,7 +46,7 @@ export const useUserInit = () => {
     };
 
     init();
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user?.sub]);
 
   return { loading, userInfo, setUserInfo, favoriteImages };
 };

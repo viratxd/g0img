@@ -21,16 +21,37 @@ export const useImageSearch = () => {
   const [page, setPage] = useState(storedPage);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    if (!observerTarget.current) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (
+        entries[0].isIntersecting &&
+        !isLoading &&
+        searchWord &&
+        !correctedQuery
+      ) {
+        getData(searchWord, page + 1, true);
+      }
+    });
+
+    observer.observe(observerTarget.current);
+    return () => observer.disconnect();
+  }, [observerTarget.current, page, isLoading, searchWord, correctedQuery]);
+
   const getData = async (word: string, pageNum = 1, isLoadMore = false) => {
     if (!word) return;
+
+    const scrollY = window.scrollY;
+
     if (!isLoadMore) {
-      setImages([]);
       setCorrectedQuery("");
       setPage(1);
       setSearchTime("");
     }
 
     setIsLoading(true);
+
     const startIndex = (pageNum - 1) * 10 + 1;
 
     try {
@@ -51,30 +72,18 @@ export const useImageSearch = () => {
       setPage(pageNum);
 
       saveSessionData(combined, word, newSearchTime, "", pageNum);
+
+      if (isLoadMore) {
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+        }, 0);
+      }
     } catch (error) {
       console.error("Search failed", error);
     } finally {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (!observerTarget.current) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      if (
-        entries[0].isIntersecting &&
-        !isLoading &&
-        searchWord &&
-        !correctedQuery
-      ) {
-        getData(searchWord, page + 1, true);
-      }
-    });
-
-    observer.observe(observerTarget.current);
-    return () => observer.disconnect();
-  }, [observerTarget.current, page, isLoading, searchWord, correctedQuery]);
 
   return {
     searchWord,

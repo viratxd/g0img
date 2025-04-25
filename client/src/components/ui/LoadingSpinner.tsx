@@ -1,9 +1,9 @@
 const LoadingSpinner = () => {
   return (
-    <div className="spinner-container">
+    <div className="loading-overlay">
       <div className="spinner" />
     </div>
-);
+  );
 };
 
 export default LoadingSpinner;

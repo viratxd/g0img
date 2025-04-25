@@ -1,5 +1,6 @@
 import { SearchForm } from "../components/SearchForm";
 import { ShowResult } from "../components/ShowResult";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useImageSearch } from "../hooks/useImageSearch";
 
 export const ImageSearch = () => {
@@ -26,6 +27,7 @@ export const ImageSearch = () => {
         search={handleSearch}
         scrollRef={observerTarget}
       />
+      {isLoading && <LoadingSpinner />}
     </div>
   );
 };

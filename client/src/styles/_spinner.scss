@@ -1,36 +1,35 @@
-.spinner-container {
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .spinner {
-  width: 50px;
-  aspect-ratio: 1;
-  display:grid;
-  -webkit-mask: conic-gradient(from 15deg,#0000,#000);
-  animation: l26 1s infinite steps(12);
-}
-.spinner,
-.spinner:before,
-.spinner:after{
-  background:
-    radial-gradient(closest-side at 50% 12.5%,
-     var(--dark-color) 96%,#0000) 50% 0/20% 80% repeat-y,
-    radial-gradient(closest-side at 12.5% 50%,
-     var(--dark-color) 96%,#0000) 0 50%/80% 20% repeat-x;
-}
-.spinner:before,
-.spinner:after {
-  content: "";
-  grid-area: 1/1;
-  transform: rotate(30deg);
-}
-.spinner:after {
-  transform: rotate(60deg);
+  width: 60px;
+  height: 60px;
+  border: 6px solid #fff;
+  border-top-color: var(--accent-color, #de4c64);
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
 }
 
-@keyframes l26 {
-  100% {transform:rotate(1turn)}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

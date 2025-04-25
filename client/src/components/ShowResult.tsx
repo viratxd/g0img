@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { IImage } from "../models/IImage";
 import { LikeImageContext } from "../contexts/LikeImageContext";
-import LoadingSpinner from "./ui/LoadingSpinner";
 
 interface IShowResultProps {
   searchWord: string;
@@ -18,13 +17,10 @@ export const ShowResult = ({
   searchTime,
   correctedQuery,
   images,
-  isLoading,
   search,
   scrollRef,
 }: IShowResultProps) => {
   const { add, likedImages } = useContext(LikeImageContext);
-
-  if (isLoading) return <LoadingSpinner />;
 
   return (
     <section className="result">
@@ -64,7 +60,6 @@ export const ShowResult = ({
         ))}
       </div>
       <div ref={scrollRef} style={{ height: "1px" }}></div>
-      {isLoading && <LoadingSpinner />}
     </section>
   );
 };

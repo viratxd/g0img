@@ -7,11 +7,7 @@
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 a {
@@ -37,7 +33,9 @@ body {
   background-color: #fcfcfc;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-sans);
   color: var(--dark-color);
   margin: 0;
@@ -56,7 +54,7 @@ h2 {
   font-size: 2.8em;
 
   @media screen and (max-width: 768px) {
-    font-size: 2.0em;
+    font-size: 2em;
   }
 }
 
@@ -83,9 +81,14 @@ button {
     background-color: var(--dark-color);
     color: var(--light-color);
   }
-
   &:focus,
   &:focus-visible {
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+    width: 100%;
   }
 }
 

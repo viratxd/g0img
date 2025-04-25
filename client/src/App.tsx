@@ -8,6 +8,7 @@ import LoadingSpinner from "./components/ui/LoadingSpinner";
 import { useUserInit } from "./hooks/useUserInit";
 import { useUserHandler } from "./hooks/useUserHandler";
 import { useLikeImageHandler } from "./hooks/useLikeImageHandler";
+import ScrollToTopButton from "./components/ui/ScrollToTopButton";
 
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -22,6 +23,7 @@ function App() {
     <UserContext.Provider value={userInfo}>
       <LikeImageContext.Provider value={likeImageContext}>
         <RouterProvider router={router} />
+        <ScrollToTopButton />
       </LikeImageContext.Provider>
     </UserContext.Provider>
   );

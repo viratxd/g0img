@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { LoginPage } from "./pages/LoginPage";
+import { Login } from "./pages/Login";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { LikeImageContext } from "./contexts/LikeImageContext";
@@ -17,7 +17,7 @@ function App() {
   const { likeImageContext } = useLikeImageHandler(userInfo.id, favoriteImages);
 
   if (loading || isLoading) return <LoadingSpinner />;
-  if (!isAuthenticated) return <LoginPage />;
+  if (!isAuthenticated) return <Login />;
 
   return (
     <UserContext.Provider value={userInfo}>

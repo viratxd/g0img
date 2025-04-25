@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { Logo } from "../assets/logo";
 
 export const Header = () => {
   const { email, userName } = useContext(UserContext);
@@ -17,6 +18,9 @@ export const Header = () => {
         <p className="header-desktop__login">
           Logged in as {userName ? userName : email}
         </p>
+        <NavLink to="/" className="header-desktop__logo">
+          Snapnest
+        </NavLink>
         <div className="header-desktop__right">
           <nav>
             <ul>

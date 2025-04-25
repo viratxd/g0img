@@ -16,7 +16,7 @@ export const ImageSearch = () => {
 
   return (
     <div className="image-search">
-      <h1>Image Search Page</h1>
+      <h1>Welcome to Snapnest 🪺</h1>
       <SearchForm search={handleSearch} />
       <ShowResult
         searchTime={searchTime}

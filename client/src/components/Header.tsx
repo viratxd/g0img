@@ -3,6 +3,7 @@ import LogoutButton from "./LogoutButton";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { Logo } from "../assets/logo";
+import { motion } from "framer-motion";
 
 export const Header = () => {
   const { email, userName } = useContext(UserContext);
@@ -18,9 +19,14 @@ export const Header = () => {
         <p className="header-desktop__login">
           Logged in as {userName ? userName : email}
         </p>
-        <NavLink to="/" className="header-desktop__logo">
-          Snapnest
-        </NavLink>
+        <motion.div
+          className="header-desktop__logo"
+          whileHover={{ scale: 1.1, filter: "brightness(1.5)" }}
+          transition={{ duration: 0.3 }}
+        >
+          <Logo width={45} height={45} />
+        </motion.div>
+
         <div className="header-desktop__right">
           <nav>
             <ul>

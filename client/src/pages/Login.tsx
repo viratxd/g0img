@@ -1,3 +1,4 @@
+import config from "../../config";
 import { Logo } from "../assets/logo";
 import LoginButton from "../components/LoginButton";
 
@@ -6,7 +7,7 @@ export const Login = () => {
     <div className="login">
       <div className="login__title">
         <Logo width={64} height={64} />
-        <h1>Snapnest</h1>
+        <h1>{config.siteName}</h1>
         <p>Your personal image collection starts here.</p>
       </div>
       <LoginButton />

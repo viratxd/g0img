@@ -9,25 +9,13 @@
   z-index: 99;
 
   &__logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--dark-color);
-    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    letter-spacing: 0.4px;
     flex-grow: 1;
-    transition: all 0.2s ease-in-out;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-
-    &:hover {
-      color: var(--dark-color);
-      opacity: 0.75;
-    }
   }
 
   &__login {

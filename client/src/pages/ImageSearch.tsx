@@ -1,3 +1,4 @@
+import config from "../../config";
 import { SearchForm } from "../components/SearchForm";
 import { ShowResult } from "../components/ShowResult";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
@@ -16,7 +17,7 @@ export const ImageSearch = () => {
 
   return (
     <div className="image-search">
-      <h1>Welcome to Snapnest 🪺</h1>
+      <h1>{config.siteName}</h1>
       <SearchForm search={handleSearch} />
       <ShowResult
         searchTime={searchTime}

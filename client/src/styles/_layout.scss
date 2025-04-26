@@ -72,9 +72,18 @@ h3 {
 }
 
 button {
+  all: unset;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.primary-button {
   font-family: var(--font-sans);
   background-color: transparent;
-  cursor: pointer;
   border: 1px solid var(--dark-color);
   border-radius: 10px;
   padding: 1rem 1.5rem;

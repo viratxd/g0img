@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useState } from "react";
 import { IImage } from "../models/IImage";
-import { LikeImageContext } from "../contexts/LikeImageContext";
+import { ImageViewer } from "./ImageViewer";
 
 interface IShowResultProps {
   searchWord: string;
@@ -20,7 +20,11 @@ export const ShowResult = ({
   search,
   scrollRef,
 }: IShowResultProps) => {
-  const { add, likedImages } = useContext(LikeImageContext);
+  const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
+
+  const handleCloseViewer = () => {
+    setSelectedImage(null);
+  };
 
   return (
     <section className="result">
@@ -41,24 +45,18 @@ export const ShowResult = ({
       <div className="result-images">
         {images?.map((image) => (
           <figure key={image.link} className="image">
-            <a onClick={() => add(image)}>
-              {likedImages.some(
-                (likedImage) => image.title === likedImage.image.title
-              ) ? (
-                <span
-                  className="material-symbols-outlined"
-                  style={{ color: "#de4c64" }}
-                >
-                  heart_check
-                </span>
-              ) : (
-                <span className="material-symbols-outlined">favorite</span>
-              )}
-            </a>
-            <img src={image.link} alt={image.title} />
+            <img
+              src={image.link}
+              alt={image.title}
+              onClick={() => setSelectedImage(image)}
+            />
           </figure>
         ))}
       </div>
+      {selectedImage && (
+        <ImageViewer image={selectedImage} onClose={handleCloseViewer} />
+      )}
+
       <div ref={scrollRef} style={{ height: "1px" }}></div>
     </section>
   );

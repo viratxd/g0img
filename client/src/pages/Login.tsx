@@ -1,5 +1,5 @@
 import config from "../../config";
-import { Logo } from "../assets/logo";
+import { Logo } from "../assets/Logo";
 import LoginButton from "../components/LoginButton";
 
 export const Login = () => {

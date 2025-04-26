@@ -2,7 +2,7 @@
   padding: 2rem 0;
 
   &-info {
-    padding: 0 2rem 1.5rem 2rem;
+    padding-bottom: 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,22 +25,20 @@
   }
 
   &-images {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
     gap: 2.5rem;
 
-    &::before {
-      content: "";
-      max-width: 280px;
-      width: 100%;
-      order: 1;
+    @media screen and (max-width: 1024px) {
+      grid-template-columns: repeat(3, minmax(150px, 1fr));
     }
 
-    &::after {
-      content: "";
-      max-width: 280px;
-      width: 100%;
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+    }
+
+    @media screen and (max-width: 480px) {
+      grid-template-columns: repeat(1, minmax(150px, 1fr));
     }
 
     .image {
@@ -52,29 +50,74 @@
 
       &:hover {
         opacity: 0.6;
-
-        span {
-          opacity: 1;
-          visibility: visible;
-        }
-      }
-
-      span {
-        font-size: 4rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: var(--light-color);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.4s;
       }
 
       img {
         height: 100%;
         object-fit: cover;
       }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .viewer {
+    position: relative;
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    margin: 3rem 8rem;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
+
+    .main-image {
+      flex: 1;
+      min-width: 0;
+      max-height: 90vh;
+      object-fit: contain;
+      background: #f0f0f0;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .options {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      background: var(--light-color);
+      width: 300px;
+
+      h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s;
     }
   }
 }

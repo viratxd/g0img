@@ -1,9 +1,9 @@
-export const CloseIcon = ({ width = 24, height = 24 }) => {
+export const CloseIcon = ({ width = 24, height = 24, fill = "#1f1f1f" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960"
-      fill="#1f1f1f"
+      fill={fill}
       width={width}
       height={height}
     >

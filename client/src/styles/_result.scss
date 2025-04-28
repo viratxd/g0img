@@ -1,7 +1,7 @@
 .result {
   padding: 2rem 0;
 
-  &-info {
+  &__info {
     padding-bottom: 2rem;
     display: flex;
     align-items: center;
@@ -24,7 +24,7 @@
     }
   }
 
-  &-images {
+  &__images {
     display: grid;
     grid-template-columns: repeat(4, minmax(150px, 1fr));
     gap: 2.5rem;
@@ -56,9 +56,40 @@
         height: 100%;
         object-fit: cover;
       }
+
+      .image__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 10px;
+      }
+
+      .image__menu {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+
+        button {
+          width: 72px;
+          height: 72px;
+        }
+      }
+
+      &:hover .image__overlay {
+        opacity: 1;
+      }
     }
   }
 
+  // Image viewer
+  // TODO: Show portrait images correctly
   .overlay {
     position: fixed;
     top: 0;
@@ -81,6 +112,13 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     margin: 3rem 8rem;
 
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      max-height: 90vh;
+      overflow: auto;
+      margin: 0 2rem;
+    }
+
     .main-image {
       flex: 1;
       min-width: 0;
@@ -90,6 +128,13 @@
       display: block;
       width: 100%;
       height: auto;
+
+      @media screen and (max-width: 768px) {
+        width: 100%;
+        height: auto;
+        max-height: 50vh;
+        object-fit: contain;
+      }
     }
 
     .options {
@@ -99,6 +144,12 @@
       gap: 1rem;
       background: var(--light-color);
       width: 320px;
+
+      @media screen and (max-width: 768px) {
+        padding: 2rem;
+        width: 100%;
+        flex-shrink: 0;
+      }
 
       h2 {
         font-size: 1.2rem;
@@ -110,6 +161,12 @@
         flex-direction: column;
         gap: 1rem;
         margin-top: 1rem;
+
+        @media screen and (max-width: 768px) {
+          flex-direction: row;
+          gap: 1rem;
+          margin-top: 0;
+        }
 
         .button-round {
           border: 1px solid var(--dark-color);
@@ -131,32 +188,6 @@
       border: none;
       cursor: pointer;
       transition: color 0.3s;
-    }
-
-    @media screen and (max-width: 768px) {
-      flex-direction: column;
-      max-height: 90vh;
-      overflow: auto;
-      margin: 0 2rem;
-
-      .main-image {
-        width: 100%;
-        height: auto;
-        max-height: 50vh;
-        object-fit: contain;
-      }
-
-      .options {
-        padding: 2rem;
-        width: 100%;
-        flex-shrink: 0;
-
-        &__buttons {
-          flex-direction: row;
-          gap: 1rem;
-          margin-top: 0;
-        }
-      }
     }
   }
 }

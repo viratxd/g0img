@@ -11,7 +11,6 @@ interface ImageViewerProps {
 
 export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
   const { add, likedImages } = useContext(LikeImageContext);
-
   return (
     <motion.div
       className="overlay"
@@ -21,7 +20,10 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
       transition={{ duration: 0.3 }}
       onClick={onClose}
     >
-      <div className="viewer" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="viewer"
+        onClick={(e) => e.stopPropagation()}
+      >
         <motion.button
           className="close-button"
           onClick={onClose}

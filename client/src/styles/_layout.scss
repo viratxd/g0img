@@ -73,21 +73,19 @@ h3 {
 
 button {
   all: unset;
-  font-family: inherit;
+  font-family: var(--font-sans);
   font-size: inherit;
   color: inherit;
-  background: none;
+  background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
-.primary-button {
-  font-family: var(--font-sans);
-  background-color: transparent;
+.logout-button {
   border: 1px solid var(--dark-color);
   border-radius: 10px;
-  padding: 1rem 1.5rem;
-  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   transition: all 0.2s;
 
   &:hover {
@@ -95,17 +93,11 @@ button {
     background-color: var(--dark-color);
     color: var(--light-color);
   }
-  &:focus,
-  &:focus-visible {
-  }
 
   @media screen and (max-width: 768px) {
     font-size: 1rem;
-    padding: 0.8rem 1.2rem;
-    width: 100%;
   }
 }
-
 figure {
   margin: 0;
 }

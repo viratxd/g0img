@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IImage } from "../models/IImage";
 import { ImageViewer } from "./ImageViewer";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface IShowResultProps {
   searchWord: string;
@@ -53,9 +54,11 @@ export const ShowResult = ({
           </figure>
         ))}
       </div>
-      {selectedImage && (
-        <ImageViewer image={selectedImage} onClose={handleCloseViewer} />
-      )}
+      <AnimatePresence>
+        {selectedImage && (
+          <ImageViewer image={selectedImage} onClose={handleCloseViewer} />
+        )}
+      </AnimatePresence>
 
       <div ref={scrollRef} style={{ height: "1px" }}></div>
     </section>

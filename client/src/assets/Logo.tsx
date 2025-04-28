@@ -7,7 +7,6 @@ export const Logo = ({width = 256, height = 256}) => {
       x="0"
       y="0"
       viewBox="0 0 256 256"
-      enable-background="new 0 0 256 256"
       xmlSpace="preserve"
       width={width}
       height={height}

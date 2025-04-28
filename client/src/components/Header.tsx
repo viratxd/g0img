@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
-import { Logo } from "../assets/logo";
+import { Logo } from "../assets/Logo";
 import { motion } from "framer-motion";
 
 export const Header = () => {
@@ -39,6 +39,7 @@ export const Header = () => {
         </div>
       </header>
       <header className="header-mobile">
+        <Logo width={45} height={45} />
         <button
           className={`hamburger ${isMobileMenuOpen ? "open" : ""}`}
           onClick={toggleMobileMenu}

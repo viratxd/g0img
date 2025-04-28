@@ -1,21 +1,27 @@
-export const loadSessionData = () => ({
-  searchWord: sessionStorage.getItem("Search word") || "",
-  images: JSON.parse(sessionStorage.getItem("Images") || "[]"),
-  searchTime: sessionStorage.getItem("Search time") || "",
-  correctedQuery: sessionStorage.getItem("Corrected query") || "",
-  page: Number(sessionStorage.getItem("Page")) || 1,
-});
 
-export const saveSessionData = (
-  images: any[],
-  word: string,
-  time: string,
-  corrected: string,
-  page: number
-) => {
-  sessionStorage.setItem("Images", JSON.stringify(images));
-  sessionStorage.setItem("Search word", word);
-  sessionStorage.setItem("Search time", time);
-  sessionStorage.setItem("Corrected query", corrected);
-  sessionStorage.setItem("Page", page.toString());
+import { ISessionData } from "../models/ISessionData";
+
+export const loadSessionData = (): ISessionData => {
+  const data = sessionStorage.getItem("ImageSearchData");
+  if (!data) {
+    return {
+      searchWord: "",
+      images: [],
+      searchTime: "",
+      correctedQuery: "",
+      page: 1,
+    };
+  }
+  return JSON.parse(data);
+};
+
+export const saveSessionData = (data: ISessionData) => {
+  const payload = {
+    searchWord: data.searchWord,
+    images: data.images,
+    searchTime: data.searchTime,
+    correctedQuery: data.correctedQuery,
+    page: data.page,
+  };
+  sessionStorage.setItem("ImageSearchData", JSON.stringify(payload));
 };

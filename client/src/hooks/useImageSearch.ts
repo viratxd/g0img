@@ -37,7 +37,7 @@ export const useImageSearch = () => {
 
     observer.observe(observerTarget.current);
     return () => observer.disconnect();
-  }, [observerTarget.current, page, isLoading, searchWord, correctedQuery]);
+  }, [page, isLoading, searchWord, correctedQuery]);
 
   const getData = async (word: string, pageNum = 1, isLoadMore = false) => {
     if (!word) return;
@@ -56,9 +56,16 @@ export const useImageSearch = () => {
 
     try {
       const data = await getImagesFromGoogleSearch(word, startIndex);
+
       if (data.spelling?.correctedQuery) {
         setCorrectedQuery(data.spelling.correctedQuery);
-        saveSessionData([], word, "", data.spelling.correctedQuery, pageNum);
+        saveSessionData({
+          images: [],
+          searchWord: word,
+          searchTime: "",
+          correctedQuery: data.spelling.correctedQuery,
+          page: pageNum,
+        });
         return;
       }
 
@@ -66,12 +73,17 @@ export const useImageSearch = () => {
       const newSearchTime = data.searchInformation?.formattedSearchTime || "";
       const combined = isLoadMore ? [...images, ...newImages] : newImages;
 
+      saveSessionData({
+        images: combined,
+        searchWord: word,
+        searchTime: newSearchTime,
+        correctedQuery: "",
+        page: pageNum,
+      });
       setImages(combined);
       setSearchTime(newSearchTime);
       setCorrectedQuery("");
       setPage(pageNum);
-
-      saveSessionData(combined, word, newSearchTime, "", pageNum);
 
       if (isLoadMore) {
         setTimeout(() => {
@@ -93,6 +105,9 @@ export const useImageSearch = () => {
     isLoading,
     observerTarget,
     handleSearch: (text: string) => {
+      if (text === searchWord && images.length > 0) {
+        return;
+      }
       setSearchWord(text);
       getData(text, 1, false);
     },

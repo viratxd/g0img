@@ -33,19 +33,19 @@ export const ShowResult = ({
     {
       key: "zoom",
       label: "Show details",
-      icon: <ZoomInIcon width={64} height={64} fill="#fff" />,
+      icon: <ZoomInIcon width={56} height={56} fill="#fff" />,
       onClick: () => setSelectedImage(image),
     },
     {
       key: "like",
       label: "Add to list",
-      icon: <HeartPlusIcon width={64} height={64} fill="#fff" />,
+      icon: <HeartPlusIcon width={56} height={56} fill="#fff" />,
       onClick: () => add(image),
     },
     {
       key: "link",
       label: "Go to the original page",
-      icon: <OpenInNewIcon width={64} height={64} fill="#fff" />,
+      icon: <OpenInNewIcon width={56} height={56} fill="#fff" />,
       href: image.image.contextLink,
     },
   ];

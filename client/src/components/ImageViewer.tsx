@@ -41,23 +41,31 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
         <div className="options">
           <h2>{image.title}</h2>
           <div className="options__buttons">
+            {/* TODO: When image is added show something else */}
             {likedImages.some(
               (likedImage) => image.title === likedImage.image.title
             ) ? (
               <span>Already in list</span>
             ) : (
-              <button className="button-round" onClick={() => add(image)}>
+              <motion.button
+                className="button-round"
+                whileHover={{ scale: 1.05, opacity: 0.9 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => add(image)}
+              >
                 Add to list
-              </button>
+              </motion.button>
             )}
-            <a
+            <motion.a
               href={image.image.contextLink}
+              whileHover={{ scale: 1.05, opacity: 0.9 }}
+              whileTap={{ scale: 0.95 }}
               className="button-round"
               target="_blank"
               rel="noopener noreferrer"
             >
               Go to the original page
-            </a>
+            </motion.a>
           </div>
         </div>
       </div>

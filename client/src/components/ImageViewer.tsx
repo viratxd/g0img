@@ -20,10 +20,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
       transition={{ duration: 0.3 }}
       onClick={onClose}
     >
-      <div
-        className="viewer"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="viewer" onClick={(e) => e.stopPropagation()}>
         <motion.button
           className="close-button"
           onClick={onClose}
@@ -52,10 +49,8 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
                 Add to list
               </button>
             )}
-
-            {/* TODO: get original link */}
             <a
-              href={image.link}
+              href={image.image.contextLink}
               className="button-round"
               target="_blank"
               rel="noopener noreferrer"

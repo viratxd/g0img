@@ -32,6 +32,11 @@ export const useLikeImageHandler = (
       image: {
         link: newLikedImage.link,
         title: newLikedImage.title,
+        image: {
+          contextLink: newLikedImage.image.contextLink,
+          height: newLikedImage.image.height,
+          width: newLikedImage.image.width,
+        },
       },
     };
 

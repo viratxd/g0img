@@ -72,7 +72,7 @@ export const ShowResult = ({
                 </motion.button>
                 <motion.a
                   whileHover={{ scale: 1.5 }}
-                  href={image.link}
+                  href={image.image.contextLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

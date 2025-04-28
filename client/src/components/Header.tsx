@@ -36,6 +36,7 @@ export const Header = () => {
           <LogoutButton />
         </div>
       </header>
+      {/* TODO: Mobile menu on the bottom */}
       <header className="header-mobile">
         <Logo width={45} height={45} />
         <button

@@ -19,6 +19,9 @@ export const Profile = () => {
     setIsEditing(!isEditing);
   };
 
+  /* TODO: Avatar? */
+  /* TODO: Reset password (get link from Auth0?) */
+
   return (
     <div className="profile">
       <h2>Profile</h2>

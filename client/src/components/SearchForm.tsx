@@ -17,6 +17,7 @@ export const SearchForm = ({ search }: ISearchFormProps) => {
     search(searchWord);
     setSearchWord("");
   };
+  /* TODO: Show previous searched words? */
 
   return (
     <form className="search-form" onSubmit={handleSubmit}>

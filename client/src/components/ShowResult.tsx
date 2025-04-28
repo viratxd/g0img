@@ -62,6 +62,8 @@ export const ShowResult = ({
     setSelectedImage(null);
   };
 
+  /* TODO: Show related words? */
+
   return (
     <section className="result">
       <div className="result__info">
@@ -87,6 +89,7 @@ export const ShowResult = ({
               onClick={() => setSelectedImage(image)}
             />
             <div className="image__overlay">
+              {/* TODO: Fix hover problem */}
               <motion.div className="image__menu">
                 {getActions(image).map(({ key, label, icon, onClick, href }) =>
                   href ? (

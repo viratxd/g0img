@@ -37,6 +37,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
         <div className="main-image">
           <img src={image.link} alt={image.title} />
         </div>
+        {/* TODO: Add source, like Google search etc. */}
         <div className="options">
           <h2>{image.title}</h2>
           <div className="options__buttons">

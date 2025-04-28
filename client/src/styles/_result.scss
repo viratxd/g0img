@@ -67,14 +67,14 @@
       }
 
       .image__menu {
-        position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        display: grid;
-        grid-template-rows: repeat(2, 1fr);
-        grid-template-columns: 1fr 1fr;
         gap: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
 
         .icon-button {
           position: relative;

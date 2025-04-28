@@ -50,6 +50,13 @@ export const ShowResult = ({
     },
   ];
 
+  const handleMouseEnter = (key: string) => {
+    setHoveredAction(key);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredAction(null);
+  };
 
   const handleCloseViewer = () => {
     setSelectedImage(null);
@@ -80,29 +87,7 @@ export const ShowResult = ({
               onClick={() => setSelectedImage(image)}
             />
             <div className="image__overlay">
-              {/* <div className="image__menu">
-                <motion.button
-                  whileHover={{ scale: 1.5 }}
-                  onClick={() => setSelectedImage(image)}
-                >
-                  <ZoomInIcon width={80} height={80} fill="#fff" />
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.5 }}
-                  onClick={() => add(image)}
-                >
-                  <HeartPlusIcon width={64} height={64} fill="#fff" />
-                </motion.button>
-                <motion.a
-                  whileHover={{ scale: 1.5 }}
-                  href={image.image.contextLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <OpenInNewIcon width={64} height={64} fill="#fff" />
-                </motion.a>
-              </div> */}
-              <div className="image__menu">
+              <motion.div className="image__menu">
                 {getActions(image).map(({ key, label, icon, onClick, href }) =>
                   href ? (
                     <motion.a
@@ -111,12 +96,14 @@ export const ShowResult = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       layout
-                      onMouseEnter={() => setHoveredAction(key)}
-                      onMouseLeave={() => setHoveredAction(null)}
+                      onMouseEnter={() => handleMouseEnter(key)}
+                      onMouseLeave={handleMouseLeave}
                       animate={{
-                        scale: hoveredAction === key ? 1.3 : 1,
+                        scale: hoveredAction === key ? 1.5 : 1,
                         opacity:
-                          hoveredAction && hoveredAction !== key ? 0.5 : 1,
+                          hoveredAction && hoveredAction !== key ? 0.2 : 1,
+                        position: hoveredAction === key ? "absolute" : "static",
+                        zIndex: hoveredAction === key ? 2 : 1,
                       }}
                       className="icon-button"
                     >
@@ -130,12 +117,14 @@ export const ShowResult = ({
                       key={key}
                       onClick={onClick}
                       layout
-                      onMouseEnter={() => setHoveredAction(key)}
-                      onMouseLeave={() => setHoveredAction(null)}
+                      onMouseEnter={() => handleMouseEnter(key)}
+                      onMouseLeave={handleMouseLeave}
                       animate={{
-                        scale: hoveredAction === key ? 1.3 : 1,
+                        scale: hoveredAction === key ? 1.5 : 1,
                         opacity:
-                          hoveredAction && hoveredAction !== key ? 0.5 : 1,
+                          hoveredAction && hoveredAction !== key ? 0.2 : 1,
+                        position: hoveredAction === key ? "absolute" : "static",
+                        zIndex: hoveredAction === key ? 2 : 1,
                       }}
                       className="icon-button"
                     >
@@ -146,7 +135,7 @@ export const ShowResult = ({
                     </motion.button>
                   )
                 )}
-              </div>
+              </motion.div>
             </div>
           </figure>
         ))}

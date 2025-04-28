@@ -19,14 +19,12 @@ export const Header = () => {
         <p className="header-desktop__login">
           Logged in as {userName ? userName : email}
         </p>
-        <motion.div
+        <motion.a
+          href="/"
           className="header-desktop__logo"
-          whileHover={{ scale: 1.1, filter: "brightness(1.5)" }}
-          transition={{ duration: 0.3 }}
         >
           <Logo width={45} height={45} />
-        </motion.div>
-
+        </motion.a>
         <div className="header-desktop__right">
           <nav>
             <ul>

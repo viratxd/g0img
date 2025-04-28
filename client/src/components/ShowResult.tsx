@@ -27,6 +27,29 @@ export const ShowResult = ({
 }: IShowResultProps) => {
   const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
   const { add } = useContext(LikeImageContext);
+  const [hoveredAction, setHoveredAction] = useState<string | null>(null);
+
+  const getActions = (image: IImage) => [
+    {
+      key: "zoom",
+      label: "Show details",
+      icon: <ZoomInIcon width={64} height={64} fill="#fff" />,
+      onClick: () => setSelectedImage(image),
+    },
+    {
+      key: "like",
+      label: "Add to list",
+      icon: <HeartPlusIcon width={64} height={64} fill="#fff" />,
+      onClick: () => add(image),
+    },
+    {
+      key: "link",
+      label: "Go to the original page",
+      icon: <OpenInNewIcon width={64} height={64} fill="#fff" />,
+      href: image.image.contextLink,
+    },
+  ];
+
 
   const handleCloseViewer = () => {
     setSelectedImage(null);
@@ -57,7 +80,7 @@ export const ShowResult = ({
               onClick={() => setSelectedImage(image)}
             />
             <div className="image__overlay">
-              <div className="image__menu">
+              {/* <div className="image__menu">
                 <motion.button
                   whileHover={{ scale: 1.5 }}
                   onClick={() => setSelectedImage(image)}
@@ -78,6 +101,51 @@ export const ShowResult = ({
                 >
                   <OpenInNewIcon width={64} height={64} fill="#fff" />
                 </motion.a>
+              </div> */}
+              <div className="image__menu">
+                {getActions(image).map(({ key, label, icon, onClick, href }) =>
+                  href ? (
+                    <motion.a
+                      key={key}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      layout
+                      onMouseEnter={() => setHoveredAction(key)}
+                      onMouseLeave={() => setHoveredAction(null)}
+                      animate={{
+                        scale: hoveredAction === key ? 1.3 : 1,
+                        opacity:
+                          hoveredAction && hoveredAction !== key ? 0.5 : 1,
+                      }}
+                      className="icon-button"
+                    >
+                      {icon}
+                      {hoveredAction === key && (
+                        <span className="icon-label">{label}</span>
+                      )}
+                    </motion.a>
+                  ) : (
+                    <motion.button
+                      key={key}
+                      onClick={onClick}
+                      layout
+                      onMouseEnter={() => setHoveredAction(key)}
+                      onMouseLeave={() => setHoveredAction(null)}
+                      animate={{
+                        scale: hoveredAction === key ? 1.3 : 1,
+                        opacity:
+                          hoveredAction && hoveredAction !== key ? 0.5 : 1,
+                      }}
+                      className="icon-button"
+                    >
+                      {icon}
+                      {hoveredAction === key && (
+                        <span className="icon-label">{label}</span>
+                      )}
+                    </motion.button>
+                  )
+                )}
               </div>
             </div>
           </figure>

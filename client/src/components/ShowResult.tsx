@@ -89,7 +89,6 @@ export const ShowResult = ({
               onClick={() => setSelectedImage(image)}
             />
             <div className="image__overlay">
-              {/* TODO: Fix hover problem */}
               <motion.div className="image__menu">
                 {getActions(image).map(({ key, label, icon, onClick, href }) =>
                   href ? (
@@ -105,7 +104,6 @@ export const ShowResult = ({
                         scale: hoveredAction === key ? 1.5 : 1,
                         opacity:
                           hoveredAction && hoveredAction !== key ? 0.2 : 1,
-                        position: hoveredAction === key ? "absolute" : "static",
                         zIndex: hoveredAction === key ? 2 : 1,
                       }}
                       className="icon-button"
@@ -126,7 +124,6 @@ export const ShowResult = ({
                         scale: hoveredAction === key ? 1.5 : 1,
                         opacity:
                           hoveredAction && hoveredAction !== key ? 0.2 : 1,
-                        position: hoveredAction === key ? "absolute" : "static",
                         zIndex: hoveredAction === key ? 2 : 1,
                       }}
                       className="icon-button"

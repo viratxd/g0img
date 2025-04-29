@@ -5,6 +5,11 @@ const FavoriteImageSchema = new mongoose.Schema({
   image: {
     title: { type: String, required: true },
     link: { type: String, required: true },
+    image: {
+      contextLink: { type: String, required: true },
+      height: { type: Number, required: true },
+      width: { type: Number, required: true },
+    },
   },
 });
 

@@ -5,6 +5,11 @@ const addedImageSchema = Joi.object({
   image: Joi.object({
     title: Joi.string().max(255).required(),
     link: Joi.string().uri().required(),
+    image: Joi.object({
+      contextLink: Joi.string().uri().required(),
+      height: Joi.number().required(),
+      width: Joi.number().required(),
+    })
   }).required(),
 });
 

@@ -115,7 +115,6 @@
   }
 
   // Image viewer
-  // TODO: Show portrait images correctly
   .overlay {
     position: fixed;
     top: 0;
@@ -152,8 +151,6 @@
       object-fit: contain;
       background: #f0f0f0;
       display: block;
-      width: 100%;
-      height: auto;
 
       @media screen and (max-width: 768px) {
         width: 100%;
@@ -202,6 +199,24 @@
           font-size: 0.95rem;
           font-weight: 700;
           text-align: center;
+        }
+      }
+    }
+
+    &.portrait {
+      .main-image {
+        max-height: 90vh;
+        width: auto;
+        max-width: 400px;
+      }
+
+      .options {
+        width: 500px;
+        align-items: center;
+
+        &__buttons {
+          max-width: 300px;
+          width: 100%;
         }
       }
     }

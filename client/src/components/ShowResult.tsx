@@ -29,27 +29,6 @@ export const ShowResult = ({
   const { add } = useContext(LikeImageContext);
   const [hoveredAction, setHoveredAction] = useState<string | null>(null);
 
-  const getActions = (image: IImage) => [
-    {
-      key: "zoom",
-      label: "Show details",
-      icon: <ZoomInIcon width={56} height={56} fill="#fff" />,
-      onClick: () => setSelectedImage(image),
-    },
-    {
-      key: "like",
-      label: "Add to list",
-      icon: <HeartPlusIcon width={56} height={56} fill="#fff" />,
-      onClick: () => add(image),
-    },
-    {
-      key: "link",
-      label: "Go to the original page",
-      icon: <OpenInNewIcon width={56} height={56} fill="#fff" />,
-      href: image.image.contextLink,
-    },
-  ];
-
   const handleMouseEnter = (key: string) => {
     setHoveredAction(key);
   };
@@ -90,51 +69,89 @@ export const ShowResult = ({
             />
             <div className="image__overlay">
               <motion.div className="image__menu">
-                {getActions(image).map(({ key, label, icon, onClick, href }) =>
-                  href ? (
-                    <motion.a
-                      key={key}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      layout
-                      onMouseEnter={() => handleMouseEnter(key)}
-                      onMouseLeave={handleMouseLeave}
-                      animate={{
-                        scale: hoveredAction === key ? 1.5 : 1,
-                        opacity:
-                          hoveredAction && hoveredAction !== key ? 0.2 : 1,
-                        zIndex: hoveredAction === key ? 2 : 1,
-                      }}
-                      className="icon-button"
-                    >
-                      {icon}
-                      {hoveredAction === key && (
-                        <span className="icon-label">{label}</span>
-                      )}
-                    </motion.a>
-                  ) : (
-                    <motion.button
-                      key={key}
-                      onClick={onClick}
-                      layout
-                      onMouseEnter={() => handleMouseEnter(key)}
-                      onMouseLeave={handleMouseLeave}
-                      animate={{
-                        scale: hoveredAction === key ? 1.5 : 1,
-                        opacity:
-                          hoveredAction && hoveredAction !== key ? 0.2 : 1,
-                        zIndex: hoveredAction === key ? 2 : 1,
-                      }}
-                      className="icon-button"
-                    >
-                      {icon}
-                      {hoveredAction === key && (
-                        <span className="icon-label">{label}</span>
-                      )}
-                    </motion.button>
-                  )
-                )}
+                {["zoom", "like", "link"].map((key) => {
+
+                  const isHovered = hoveredAction === key;
+                  const isDimmed = hoveredAction && hoveredAction !== key;
+                  let element = null;
+
+                  switch (key) {
+                    case "zoom":
+                      element = (
+                        <motion.button
+                          key={key}
+                          onClick={() => setSelectedImage(image)}
+                          layout
+                          onMouseEnter={() => handleMouseEnter(key)}
+                          onMouseLeave={handleMouseLeave}
+                          animate={{
+                            scale: isHovered ? 1.5 : 1,
+                            opacity: isDimmed ? 0.2 : 1,
+                            zIndex: isHovered ? 2 : 1,
+                          }}
+                          className="icon-button"
+                        >
+                          <ZoomInIcon width={56} height={56} fill="#fff" />
+                          {isHovered && (
+                            <span className="icon-label">Show details</span>
+                          )}
+                        </motion.button>
+                      );
+                      break;
+
+                    case "like":
+                      element = (
+                        <motion.button
+                          key={key}
+                          onClick={() => add(image)}
+                          layout
+                          onMouseEnter={() => handleMouseEnter(key)}
+                          onMouseLeave={handleMouseLeave}
+                          animate={{
+                            scale: isHovered ? 1.5 : 1,
+                            opacity: isDimmed ? 0.2 : 1,
+                            zIndex: isHovered ? 2 : 1,
+                          }}
+                          className="icon-button"
+                        >
+                          <HeartPlusIcon width={56} height={56} fill="#fff" />
+                          {isHovered && (
+                            <span className="icon-label">Add to list</span>
+                          )}
+                        </motion.button>
+                      );
+                      break;
+
+                    case "link":
+                      element = (
+                        <motion.a
+                          key={key}
+                          href={image.image.contextLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          layout
+                          onMouseEnter={() => handleMouseEnter(key)}
+                          onMouseLeave={handleMouseLeave}
+                          animate={{
+                            scale: isHovered ? 1.5 : 1,
+                            opacity: isDimmed ? 0.2 : 1,
+                            zIndex: isHovered ? 2 : 1,
+                          }}
+                          className="icon-button"
+                        >
+                          <OpenInNewIcon width={56} height={56} fill="#fff" />
+                          {isHovered && (
+                            <span className="icon-label">
+                              Go to the original page
+                            </span>
+                          )}
+                        </motion.a>
+                      );
+                      break;
+                  }
+
+                  return element;
+                })}
               </motion.div>
             </div>
           </figure>

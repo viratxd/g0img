@@ -1,4 +1,4 @@
-export const Logo = ({width = 256, height = 256}) => {
+export const Logo = ({ width = 256, height = 256 }) => {
   return (
     <svg
       version="1.1"
@@ -11,11 +11,19 @@ export const Logo = ({width = 256, height = 256}) => {
       width={width}
       height={height}
     >
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#bfffd5" />
+          <stop offset="50%" stopColor="#ffdc8f" />
+          <stop offset="100%" stopColor="#f18284" />
+        </linearGradient>
+      </defs>
+
       <path
         style={{
           fill: "none",
-          stroke: "#353434",
-          strokeWidth: 7,
+          stroke: "url(#gradient)",
+          strokeWidth: 8,
           strokeLinecap: "round",
           strokeMiterlimit: 10,
         }}
@@ -24,8 +32,8 @@ export const Logo = ({width = 256, height = 256}) => {
       <path
         style={{
           fill: "none",
-          stroke: "#353434",
-          strokeWidth: 7,
+          stroke: "url(#gradient)",
+          strokeWidth: 8,
           strokeLinecap: "round",
           strokeMiterlimit: 10,
         }}
@@ -34,8 +42,8 @@ export const Logo = ({width = 256, height = 256}) => {
       <path
         style={{
           fill: "none",
-          stroke: "#353434",
-          strokeWidth: 7,
+          stroke: "url(#gradient)",
+          strokeWidth: 8,
           strokeLinecap: "round",
           strokeMiterlimit: 10,
         }}
@@ -44,8 +52,8 @@ export const Logo = ({width = 256, height = 256}) => {
       <circle
         style={{
           fill: "none",
-          stroke: "#353434",
-          strokeWidth: 7,
+          stroke: "url(#gradient)",
+          strokeWidth: 8,
           strokeLinecap: "round",
           strokeMiterlimit: 10,
         }}

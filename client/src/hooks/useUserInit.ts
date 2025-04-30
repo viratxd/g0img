@@ -16,11 +16,13 @@ export const useUserInit = () => {
     updateUserName: () => {},
   });
 
+  /* FIXME: user data loading delay */
+
   const [favoriteImages, setFavoriteImages] = useState<IFavoriteImage[]>([]);
 
   useEffect(() => {
     const init = async () => {
-      try {
+      try { 
         if (!isAuthenticated || !user?.sub) return;
 
         const userData = await fetchUserDataFromDB(user.sub);

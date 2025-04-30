@@ -16,7 +16,7 @@ function App() {
   const { userInfo } = useUserHandler(rawUserInfo);
   const { likeImageContext } = useLikeImageHandler(userInfo.id, favoriteImages);
 
-  if (loading || isLoading || !userInfo.id) return <LoadingSpinner />;
+  if (loading || isLoading ) return <LoadingSpinner />;
   if (!isAuthenticated) return <Login />;
 
   return (

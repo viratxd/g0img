@@ -52,4 +52,37 @@
   cursor: pointer;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 3.5rem;
+  }
+}
+
+// Logout button
+.logout-button-desktop {
+  border: 1px solid var(--dark-color);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+  display: block;
+
+  &:hover {
+    border: 1px solid transparent;
+    background-color: var(--dark-color);
+    color: var(--light-color);
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.logout-button-mobile {
+  display: none;
+  flex-direction: column;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
 }

@@ -19,6 +19,10 @@ a {
 
   &:hover {
     color: var(--light-color);
+
+    @media screen and (max-width: 768px) {
+      color: var(--dark-color);
+    }
   }
 }
 
@@ -82,23 +86,6 @@ button {
   cursor: pointer;
 }
 
-.logout-button {
-  border: 1px solid var(--dark-color);
-  border-radius: 10px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  transition: all 0.2s;
-
-  &:hover {
-    border: 1px solid transparent;
-    background-color: var(--dark-color);
-    color: var(--light-color);
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
-  }
-}
 figure {
   margin: 0;
 }

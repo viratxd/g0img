@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { LikeImageContext } from "../contexts/LikeImageContext";
 import { IImage } from "../models/IImage";
-import { CloseIcon } from "../assets/icons/CloseIcon";
 import { AnimatePresence, motion } from "framer-motion";
+import { Icon } from "./Icon";
 
 interface ImageViewerProps {
   image: IImage;
@@ -52,7 +52,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
           aria-label="Close"
         >
-          <CloseIcon />
+          <Icon name={"close"} />
         </motion.button>
 
         <div className="main-image">

@@ -3,9 +3,7 @@ import { IImage } from "../models/IImage";
 import { ImageViewer } from "./ImageViewer";
 import { AnimatePresence, motion } from "framer-motion";
 import { LikeImageContext } from "../contexts/LikeImageContext";
-import { ZoomInIcon } from "../assets/icons/ZoomInIcon";
-import { HeartPlusIcon } from "../assets/icons/HeartPlusIcon";
-import { OpenInNewIcon } from "../assets/icons/OpenInNewIcon";
+import { Icon } from "./Icon";
 
 interface IShowResultProps {
   searchWord: string;
@@ -91,7 +89,7 @@ export const ShowResult = ({
                           }}
                           className="icon-button"
                         >
-                          <ZoomInIcon width={56} height={56} fill="#fff" />
+                          <Icon width={56} height={56} fill={"#fff"} name={"zoomIn"} />
                           {isHovered && (
                             <span className="icon-label">Show details</span>
                           )}
@@ -114,7 +112,7 @@ export const ShowResult = ({
                           }}
                           className="icon-button"
                         >
-                          <HeartPlusIcon width={56} height={56} fill="#fff" />
+                          <Icon width={56} height={56} fill={"#fff"} name={"heartPlus"} />
                           {isHovered && (
                             <span className="icon-label">Add to list</span>
                           )}
@@ -139,7 +137,7 @@ export const ShowResult = ({
                           }}
                           className="icon-button"
                         >
-                          <OpenInNewIcon width={56} height={56} fill="#fff" />
+                          <Icon width={56} height={56} fill={"#fff"} name={"openInNew"} />
                           {isHovered && (
                             <span className="icon-label">
                               Go to the original page

@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { Icon } from "../components/Icon";
 
 export const Profile = () => {
   const { email, userName, updateUserName } = useContext(UserContext);
@@ -41,13 +42,13 @@ export const Profile = () => {
           </p>
 
           {isEditing ? (
-            <span className="material-symbols-outlined" onClick={toggleEditing}>
-              save
-            </span>
+            <button onClick={toggleEditing}>
+              <Icon name="save" width={25} height={25} fill="#1f1f1f" />
+            </button>
           ) : (
-            <span className="material-symbols-outlined" onClick={toggleEditing}>
-              edit
-            </span>
+            <button onClick={toggleEditing}>
+              <Icon name="edit" width={25} height={25} fill="#1f1f1f" />
+            </button>
           )}
         </div>
         <p>

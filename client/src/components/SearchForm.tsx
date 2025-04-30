@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { SearchIcon } from "../assets/icons/SearchIcon";
 import { motion } from "framer-motion";
+import { Icon } from "./Icon";
 
 interface ISearchFormProps {
   search: (text: string) => void;
@@ -32,7 +32,7 @@ export const SearchForm = ({ search }: ISearchFormProps) => {
         whileTap={{ scale: 0.9, rotate: -10 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <SearchIcon width={24} height={24} />
+        <Icon width={24} height={24} name={"search"} />
       </motion.button>
     </form>
   );

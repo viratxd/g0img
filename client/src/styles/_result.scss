@@ -9,10 +9,16 @@
 
     @media screen and (max-width: 768px) {
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.5rem;
+      align-items: center;
+      gap: 0.8rem;
       padding: 0;
       margin-bottom: 1rem;
+      font-size: 1.2rem;
+
+      p {
+        font-size: 0.9rem;
+        align-self: flex-end;
+      }
     }
 
     .corrected-query {
@@ -31,14 +37,12 @@
 
     @media screen and (max-width: 1024px) {
       grid-template-columns: repeat(3, minmax(150px, 1fr));
+      gap: 2rem;
     }
 
     @media screen and (max-width: 768px) {
       grid-template-columns: repeat(2, minmax(150px, 1fr));
-    }
-
-    @media screen and (max-width: 520px) {
-      grid-template-columns: repeat(1, minmax(150px, 1fr));
+      gap: 1.5rem;
     }
 
     .image {

@@ -38,6 +38,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
           <Icon name={"close"} />
         </motion.button>
 
+        {/* FIXME: Fix viewer width even when the image is wide */}
         <div className="main-image">
           <img src={image.link} alt={image.title} />
         </div>

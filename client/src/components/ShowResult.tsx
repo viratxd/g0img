@@ -25,11 +25,6 @@ export const ShowResult = ({
 }: IShowResultProps) => {
   const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
   const [hoveredAction, setHoveredAction] = useState<string | null>(null);
-  const [justAdded, setJustAdded] = useState(false);
-
-  useEffect(() => {
-    setJustAdded(false);
-  }, [hoveredAction]);
 
   const handleMouseEnter = (key: string) => {
     setHoveredAction(key);

@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IImage } from "../models/IImage";
 import { ImageViewer } from "./ImageViewer";
 import { AnimatePresence, motion } from "framer-motion";
-import { LikeImageContext } from "../contexts/LikeImageContext";
 import { Icon } from "./Icon";
-import { HandsUp } from "../assets/HandsUp";
+import { LikeButtonWithText } from "./ui/LikeButtonWithText";
 
 interface IShowResultProps {
   searchWord: string;
@@ -25,23 +24,12 @@ export const ShowResult = ({
   scrollRef,
 }: IShowResultProps) => {
   const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
-  const { add, likedImages } = useContext(LikeImageContext);
   const [hoveredAction, setHoveredAction] = useState<string | null>(null);
   const [justAdded, setJustAdded] = useState(false);
 
   useEffect(() => {
     setJustAdded(false);
   }, [hoveredAction]);
-
-  useEffect(() => {
-    if (justAdded) {
-      const timer = setTimeout(() => {
-        setJustAdded(false);
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [justAdded]);
 
   const handleMouseEnter = (key: string) => {
     setHoveredAction(key);
@@ -54,16 +42,6 @@ export const ShowResult = ({
   const handleCloseViewer = () => {
     setSelectedImage(null);
   };
-
-  useEffect(() => {
-    if (justAdded) {
-      const timer = setTimeout(() => {
-        setJustAdded(false);
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [justAdded]);
 
   /* TODO: Show related words? */
 
@@ -128,77 +106,15 @@ export const ShowResult = ({
 
                     case "like":
                       return (
-                        <AnimatePresence mode="wait" key={key}>
-                          {justAdded ? (
-                            <motion.button
-                              key="added"
-                              className="icon-button"
-                              initial={{
-                                opacity: 0,
-                                y: 10,
-                                scale: 0.95,
-                              }}
-                              animate={{
-                                opacity: 1,
-                                y: 0,
-                                scale: 1.05,
-                              }}
-                              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                              transition={{
-                                duration: 0.5,
-                                ease: [0.4, 0, 0.2, 1],
-                              }}
-                            >
-                              <HandsUp width={56} height={56} />
-                              <span className="icon-label">Image added!</span>
-                            </motion.button>
-                          ) : likedImages.some(
-                              (likedImage) =>
-                                image.title === likedImage.image.title
-                            ) ? (
-                            <motion.button
-                              layout
-                              onMouseEnter={() => handleMouseEnter(key)}
-                              onMouseLeave={handleMouseLeave}
-                              animate={animateProps}
-                              className="icon-button"
-                            >
-                              <Icon
-                                width={56}
-                                height={56}
-                                fill={"#d88787"}
-                                name={"favorite"}
-                              />
-                              {isHovered && (
-                                <span className="icon-label">
-                                  Already in list
-                                </span>
-                              )}
-                            </motion.button>
-                          ) : (
-                            <motion.button
-                              onClick={() => {
-                                add(image);
-                                setJustAdded(true);
-                              }}
-                              layout
-                              onMouseEnter={() => handleMouseEnter(key)}
-                              onMouseLeave={handleMouseLeave}
-                              animate={animateProps}
-                              className="icon-button"
-                            >
-                              <Icon
-                                width={56}
-                                height={56}
-                                fill={"#fff"}
-                                name={"heartPlus"}
-                              />
-                              {isHovered && (
-                                <span className="icon-label">Add to list</span>
-                              )}
-                            </motion.button>
-                          )}
-                        </AnimatePresence>
+                        <LikeButtonWithText
+                          key={key}
+                          image={image}
+                          isHovered={isHovered}
+                          compact={true}
+                          isDimmed={isDimmed}
+                          onMouseEnter={() => handleMouseEnter(key)}
+                          onMouseLeave={handleMouseLeave}
+                        />
                       );
 
                     case "link":

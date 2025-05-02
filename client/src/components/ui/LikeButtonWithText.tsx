@@ -8,7 +8,8 @@ import { Icon } from "../Icon";
 interface ILikeButtonWithText {
   key?: string;
   image: IImage;
-  compact: boolean;
+  isIcon: boolean;
+  isMobile: boolean;
   isHovered?: boolean;
   isDimmed?: boolean | "" | null;
   onMouseEnter?: () => void;
@@ -17,7 +18,8 @@ interface ILikeButtonWithText {
 export const LikeButtonWithText = ({
   key,
   image,
-  compact,
+  isIcon,
+  isMobile,
   isHovered,
   isDimmed,
   onMouseEnter,
@@ -44,7 +46,7 @@ export const LikeButtonWithText = ({
   }, [justAdded]);
 
   // ImageViewer
-  if (!compact) {
+  if (!isIcon) {
     return (
       <AnimatePresence mode="wait" key={key}>
         {justAdded ? (
@@ -107,7 +109,7 @@ export const LikeButtonWithText = ({
   }
 
   // ShowResult
-  return (
+  return !isMobile ? (
     <AnimatePresence mode="wait" key={key}>
       {justAdded ? (
         <motion.button
@@ -149,5 +151,14 @@ export const LikeButtonWithText = ({
         </motion.button>
       )}
     </AnimatePresence>
+    /* Mobile view */
+  ) : alreadyLiked ? (
+    <span>
+      <Icon name={"favorite"} width={32} height={32} fill="#d88787" />
+    </span>
+  ) : (
+    <button onClick={() => add(image)}>
+      <Icon name={"heartPlus"} width={32} height={32} fill="#222" />
+    </button>
   );
 };

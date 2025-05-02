@@ -69,86 +69,103 @@ export const ShowResult = ({
               alt={image.title}
               onClick={() => setSelectedImage(image)}
             />
-            <div className="image__overlay">
-              <motion.div className="image__menu">
-                {["zoom", "like", "link"].map((key) => {
-                  const isHovered = hoveredAction === key;
-                  const isDimmed = hoveredAction && hoveredAction !== key;
-                  const animateProps = {
-                    scale: isHovered ? 1.5 : 1,
-                    opacity: isDimmed ? 0.2 : 1,
-                    zIndex: isHovered ? 2 : 1,
-                  };
+            <div className="image__desktop">
+              <div className="image__overlay">
+                <motion.div className="image__menu">
+                  {["zoom", "like", "link"].map((key) => {
+                    const isHovered = hoveredAction === key;
+                    const isDimmed = hoveredAction && hoveredAction !== key;
+                    const animateProps = {
+                      scale: isHovered ? 1.5 : 1,
+                      opacity: isDimmed ? 0.2 : 1,
+                      zIndex: isHovered ? 2 : 1,
+                    };
 
-                  switch (key) {
-                    case "zoom":
-                      return (
-                        <motion.button
-                          key={key}
-                          onClick={() => setSelectedImage(image)}
-                          layout
-                          onMouseEnter={() => handleMouseEnter(key)}
-                          onMouseLeave={handleMouseLeave}
-                          animate={animateProps}
-                          className="icon-button"
-                        >
-                          <Icon
-                            width={56}
-                            height={56}
-                            fill={"#fff"}
-                            name={"zoomIn"}
+                    switch (key) {
+                      case "zoom":
+                        return (
+                          <motion.button
+                            key={key}
+                            onClick={() => setSelectedImage(image)}
+                            layout
+                            onMouseEnter={() => handleMouseEnter(key)}
+                            onMouseLeave={handleMouseLeave}
+                            animate={animateProps}
+                            className="icon-button"
+                          >
+                            <Icon
+                              width={56}
+                              height={56}
+                              fill={"#fff"}
+                              name={"zoomIn"}
+                            />
+                            {isHovered && (
+                              <span className="icon-label">Show details</span>
+                            )}
+                          </motion.button>
+                        );
+
+                      case "like":
+                        return (
+                          <LikeButtonWithText
+                            key={key}
+                            image={image}
+                            isHovered={isHovered}
+                            isIcon={true}
+                            isMobile={false}
+                            isDimmed={isDimmed}
+                            onMouseEnter={() => handleMouseEnter(key)}
+                            onMouseLeave={handleMouseLeave}
                           />
-                          {isHovered && (
-                            <span className="icon-label">Show details</span>
-                          )}
-                        </motion.button>
-                      );
+                        );
 
-                    case "like":
-                      return (
-                        <LikeButtonWithText
-                          key={key}
-                          image={image}
-                          isHovered={isHovered}
-                          compact={true}
-                          isDimmed={isDimmed}
-                          onMouseEnter={() => handleMouseEnter(key)}
-                          onMouseLeave={handleMouseLeave}
-                        />
-                      );
+                      case "link":
+                        return (
+                          <motion.a
+                            key={key}
+                            href={image.image.contextLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            layout
+                            onMouseEnter={() => handleMouseEnter(key)}
+                            onMouseLeave={handleMouseLeave}
+                            animate={animateProps}
+                            className="icon-button"
+                          >
+                            <Icon
+                              width={56}
+                              height={56}
+                              fill={"#fff"}
+                              name={"openInNew"}
+                            />
+                            {isHovered && (
+                              <span className="icon-label">
+                                Go to the original page
+                              </span>
+                            )}
+                          </motion.a>
+                        );
 
-                    case "link":
-                      return (
-                        <motion.a
-                          key={key}
-                          href={image.image.contextLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          layout
-                          onMouseEnter={() => handleMouseEnter(key)}
-                          onMouseLeave={handleMouseLeave}
-                          animate={animateProps}
-                          className="icon-button"
-                        >
-                          <Icon
-                            width={56}
-                            height={56}
-                            fill={"#fff"}
-                            name={"openInNew"}
-                          />
-                          {isHovered && (
-                            <span className="icon-label">
-                              Go to the original page
-                            </span>
-                          )}
-                        </motion.a>
-                      );
-
-                    default:
-                      return null;
-                  }
-                })}
-              </motion.div>
+                      default:
+                        return null;
+                    }
+                  })}
+                </motion.div>
+              </div>
+            </div>
+            {/* Mobile view */}
+            <div className="image__mobile">
+              <button onClick={() => setSelectedImage(image)}>
+                <Icon name={"zoomIn"} width={32} height={32} fill="#222" />
+              </button>
+              <LikeButtonWithText image={image} isIcon={true} isMobile={true} />
+              <a
+                href={image.image.contextLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name={"openInNew"} width={32} height={32} fill="#222" />
+              </a>
             </div>
           </figure>
         ))}

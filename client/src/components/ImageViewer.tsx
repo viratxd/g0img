@@ -34,6 +34,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
           aria-label="Close"
         >
+          {/* TODO: light color if image is dark */}
           <Icon name={"close"} />
         </motion.button>
 
@@ -44,7 +45,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
         <div className="options">
           <h2>{image.title}</h2>
           <div className="options__buttons">
-            <LikeButtonWithText image={image} compact={false} />
+            <LikeButtonWithText image={image} isIcon={false} isMobile={false} />
             <motion.a
               href={image.image.contextLink}
               whileHover={{ scale: 1.05, opacity: 0.9 }}

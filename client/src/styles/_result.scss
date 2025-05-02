@@ -52,8 +52,39 @@
       transition: all 0.4s;
       position: relative;
 
+      &__desktop {
+        @media screen and (max-width: 768px) {
+          display: none;
+        }
+      }
+
+      &__mobile {
+        display: none;
+
+        @media screen and (max-width: 768px) {
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: var(--light-color);
+          opacity: 0.75;
+          padding-top: 0.5rem;
+          
+          button, a {
+            padding: 0 1rem;
+          }
+          
+        }
+      }
+
       &:hover {
         opacity: 0.6;
+
+        @media screen and (max-width: 768px) {
+          opacity: 1;
+        }
       }
 
       img {
@@ -61,7 +92,7 @@
         object-fit: cover;
       }
 
-      .image__overlay {
+      &__overlay {
         position: absolute;
         inset: 0;
         background: rgba(0, 0, 0, 0.5);
@@ -70,7 +101,7 @@
         padding: 10px;
       }
 
-      .image__menu {
+      &__menu {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -130,6 +161,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 2rem 0 6rem;
   }
 
   .viewer {
@@ -143,7 +175,6 @@
 
     @media screen and (max-width: 768px) {
       flex-direction: column;
-      max-height: 90vh;
       overflow: auto;
       margin: 0 2rem;
     }

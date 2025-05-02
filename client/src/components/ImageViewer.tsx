@@ -70,15 +70,15 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
                     opacity: 0,
                     y: 10,
                     scale: 0.95,
-                    backgroundColor: "#ffffff",
-                    color: "#000000",
+                    backgroundColor: "#e1ded9",
+                    color: "#353434",
                   }}
                   animate={{
                     opacity: 1,
                     y: 0,
                     scale: 1.05,
-                    backgroundColor: "#bbd3c8",
-                    color: "#0b3823",
+                    backgroundColor: "#353434",
+                    color: "#e1ded9",
                   }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{
@@ -93,7 +93,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
                     fontSize: "0.95rem",
                   }}
                 >
-                  Image has been added!
+                  Image has been added 🙌
                 </motion.span>
               ) : likedImages.some(
                   (likedImage) => image.title === likedImage.image.title
@@ -104,6 +104,15 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
                   transition={{ duration: 0.3 }}
+                  style={{
+                    padding: "0.8rem 1.2rem",
+                    borderRadius: "75px",
+                    fontWeight: 600,
+                    display: "inline-block",
+                    fontSize: "0.95rem",
+                    backgroundColor: "#353434",
+                    color: "#e1ded9",
+                  }}
                 >
                   Already in list
                 </motion.span>

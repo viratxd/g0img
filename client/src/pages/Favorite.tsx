@@ -3,7 +3,7 @@ import { LikeImageContext } from "../contexts/LikeImageContext";
 
 export const Favorite = () => {
   const { likedImages, remove } = useContext(LikeImageContext);
-
+  //FIXME: Cannot remove image without refreshing the page
   return (
     <div className="favorite">
       <div className="favorite-images">

@@ -12,6 +12,10 @@
 2. `npm install`
 3. `nodemon server`
 
+#### Test
+username: test@gmail.com
+password: ThisIsTest!
+
 ---
 
 ## Beskrivning

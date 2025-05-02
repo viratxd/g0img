@@ -150,16 +150,20 @@ export const ShowResult = ({
             </div>
             {/* Mobile view */}
             <div className="image__mobile">
-              <button onClick={() => setSelectedImage(image)}>
-                <Icon name={"zoomIn"} width={32} height={32} fill="#222" />
+              <button
+                className="image__mobile__button"
+                onClick={() => setSelectedImage(image)}
+              >
+                <Icon name={"zoomIn"} width={24} height={24} fill="#222" />
               </button>
               <LikeButtonWithText image={image} isIcon={true} isMobile={true} />
               <a
+                className="image__mobile__button"
                 href={image.image.contextLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Icon name={"openInNew"} width={32} height={32} fill="#222" />
+                <Icon name={"openInNew"} width={24} height={24} fill="#222" />
               </a>
             </div>
           </figure>

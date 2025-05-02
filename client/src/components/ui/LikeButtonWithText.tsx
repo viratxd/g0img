@@ -70,6 +70,7 @@ export const LikeButtonWithText = ({
           </motion.span>
         ) : alreadyLiked ? (
           <motion.span
+            className="button-round"
             key="already"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -151,14 +152,14 @@ export const LikeButtonWithText = ({
         </motion.button>
       )}
     </AnimatePresence>
-    /* Mobile view */
-  ) : alreadyLiked ? (
-    <span>
-      <Icon name={"favorite"} width={32} height={32} fill="#d88787" />
+  ) : /* Mobile view */
+  alreadyLiked ? (
+    <span className="image__mobile__button">
+      <Icon name={"favorite"} width={24} height={24} fill="#d88787" />
     </span>
   ) : (
-    <button onClick={() => add(image)}>
-      <Icon name={"heartPlus"} width={32} height={32} fill="#222" />
+    <button onClick={() => add(image)} className="image__mobile__button">
+      <Icon name={"heartPlus"} width={24} height={24} fill="#222" />
     </button>
   );
 };

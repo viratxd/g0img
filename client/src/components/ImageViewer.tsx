@@ -54,7 +54,7 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Go to the original page
+              Original page
             </motion.a>
           </div>
         </div>

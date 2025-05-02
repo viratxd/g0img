@@ -16,30 +16,30 @@ export const useUserInit = () => {
     updateUserName: () => {},
   });
 
-  /* FIXME: user data loading delay */
-
   const [favoriteImages, setFavoriteImages] = useState<IFavoriteImage[]>([]);
 
   useEffect(() => {
     const init = async () => {
-      try { 
+      try {
         if (!isAuthenticated || !user?.sub) return;
 
         const userData = await fetchUserDataFromDB(user.sub);
-
         if (!userData) return;
 
         const { _id, email, userName } = userData.data;
 
-        setUserInfo({
+        const completeUserInfo = {
           id: _id ?? "",
           email: email ?? "",
           userName: userName ?? "",
-        });
+        };
 
-        const savedFavoriteImages = await getImagesFromDB(_id);
+        setUserInfo(completeUserInfo);
 
-        if (savedFavoriteImages) setFavoriteImages(savedFavoriteImages);
+        if (_id) {
+          const savedFavoriteImages = await getImagesFromDB(_id);
+          if (savedFavoriteImages) setFavoriteImages(savedFavoriteImages);
+        }
       } catch (error) {
         console.error("Error getting userInfo from DB", error);
       } finally {

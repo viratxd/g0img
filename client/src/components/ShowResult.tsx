@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IImage } from "../models/IImage";
 import { ImageViewer } from "./ImageViewer";
 import { AnimatePresence, motion } from "framer-motion";

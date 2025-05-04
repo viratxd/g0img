@@ -59,11 +59,7 @@ export const ShowResult = ({
       <div className="result__images">
         {images?.map((image) => (
           <figure key={image.link} className="image">
-            <img
-              src={image.link}
-              alt={image.title}
-              onClick={() => setSelectedImage(image)}
-            />
+            <img src={image.link} alt={image.title} />
             <div className="image__desktop">
               <div className="image__overlay">
                 <motion.div className="image__menu">

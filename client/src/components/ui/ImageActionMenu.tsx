@@ -9,6 +9,8 @@ interface IImageActionMenu {
   hoveredAction: string | null;
   onMouseEnter: (key: string) => void;
   onMouseLeave: () => void;
+  mode: "add" | "remove";
+  imageId?: string;
 }
 
 export const ImageActionMenu = ({
@@ -17,8 +19,11 @@ export const ImageActionMenu = ({
   hoveredAction,
   onMouseEnter,
   onMouseLeave,
+  mode,
+  imageId,
 }: IImageActionMenu) => {
-    const actions = ["zoom", "like", "link"] as const;
+  const actions = ["zoom", "like", "link"] as const;
+
   return (
     <>
       <div className="image__desktop">
@@ -68,6 +73,8 @@ export const ImageActionMenu = ({
                       isDimmed={isDimmed}
                       onMouseEnter={() => onMouseEnter(key)}
                       onMouseLeave={onMouseLeave}
+                      mode={mode}
+                      imageId={imageId}
                     />
                   );
 
@@ -107,13 +114,16 @@ export const ImageActionMenu = ({
       </div>
       {/* Mobile view */}
       <div className="image__mobile">
-        <button
-          className="image__mobile__button"
-          onClick={onZoom}
-        >
+        <button className="image__mobile__button" onClick={onZoom}>
           <Icon name={"zoomIn"} width={24} height={24} fill="#222" />
         </button>
-        <LikeButtonWithText image={image} isIcon={true} isMobile={true} />
+        <LikeButtonWithText
+          image={image}
+          isIcon={true}
+          isMobile={true}
+          mode={mode}
+          imageId={imageId}
+        />
         <a
           className="image__mobile__button"
           href={image.image.contextLink}

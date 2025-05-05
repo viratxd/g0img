@@ -55,7 +55,7 @@ export const ShowResult = ({
         )}
         {searchTime && <p>Search time: {searchTime}sec</p>}
       </div>
-      <div className="result__images">
+      <div className="images">
         {images?.map((image) => (
           <figure key={image.link} className="image">
             <img src={image.link} alt={image.title} />
@@ -65,13 +65,18 @@ export const ShowResult = ({
               hoveredAction={hoveredAction}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              mode="add"
             />
           </figure>
         ))}
       </div>
       <AnimatePresence>
         {selectedImage && (
-          <ImageViewer image={selectedImage} onClose={handleCloseViewer} />
+          <ImageViewer
+            image={selectedImage}
+            onClose={handleCloseViewer}
+            mode="add"
+          />
         )}
       </AnimatePresence>
 

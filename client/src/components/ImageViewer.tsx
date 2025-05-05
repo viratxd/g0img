@@ -5,10 +5,12 @@ import { LikeButtonWithText } from "./ui/LikeButtonWithText";
 
 interface ImageViewerProps {
   image: IImage;
+  imageId?: string;
   onClose: () => void;
+  mode: "add" | "remove";
 }
 
-export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
+export const ImageViewer = ({ image, onClose, mode, imageId }: ImageViewerProps) => {
   const isPortrait = image.image.width < image.image.height;
 
   return (
@@ -46,7 +48,13 @@ export const ImageViewer = ({ image, onClose }: ImageViewerProps) => {
         <div className="options">
           <h2>{image.title}</h2>
           <div className="options__buttons">
-            <LikeButtonWithText image={image} isIcon={false} isMobile={false} />
+            <LikeButtonWithText
+              image={image}
+              isIcon={false}
+              isMobile={false}
+              mode={mode}
+              imageId={imageId}
+            />
             <motion.a
               href={image.image.contextLink}
               whileHover={{ scale: 1.05, opacity: 0.9 }}

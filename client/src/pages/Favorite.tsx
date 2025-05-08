@@ -1,30 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ImageActionMenu } from "../components/ui/ImageActionMenu";
 import { IImage } from "../models/IImage";
 import { AnimatePresence } from "framer-motion";
 import { ImageViewer } from "../components/ImageViewer";
-import { getImagesFromDB } from "../services/imageService";
-import { UserContext } from "../contexts/UserContext";
-import { IFavoriteImage } from "../models/IFavoriteImage";
+import { LikeImageContext } from "../contexts/LikeImageContext";
 
 export const Favorite = () => {
-  const { id } = useContext(UserContext);
-  const [likedImages, setLikedImages] = useState<IFavoriteImage[]>([]);
+  const { likedImages } = useContext(LikeImageContext);
   const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
   const [hoveredAction, setHoveredAction] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchImages = async () => {
-      const images = await getImagesFromDB(id);
-      if (images) {
-        setLikedImages(images);
-      }
-    };
-
-    fetchImages();
-  }, [id]);
 
   const handleMouseEnter = (key: string) => {
     setHoveredAction(key);
@@ -46,8 +30,8 @@ export const Favorite = () => {
       ) : (
         <div className="images">
           {likedImages.map((image) => (
-            <>
-              <figure key={image._id} className="image">
+            <div key={image._id}>
+              <figure className="image">
                 <img src={image.image.link} alt={image.image.title} />
                 <ImageActionMenu
                   image={image.image}
@@ -69,7 +53,7 @@ export const Favorite = () => {
                   />
                 )}
               </AnimatePresence>
-            </>
+            </div>
           ))}
         </div>
       )}

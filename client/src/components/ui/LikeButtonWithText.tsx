@@ -158,7 +158,8 @@ export const LikeButtonWithText = ({
           </motion.button>
         )}
       </AnimatePresence>
-    ) : /* Mobile view */
+    ) : 
+    /* Mobile view */
     alreadyLiked ? (
       <span className="image__mobile__button">
         <Icon name={"favorite"} width={24} height={24} fill="#d88787" />
